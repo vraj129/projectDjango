@@ -1,0 +1,11 @@
+Hello Profile, Jai Swaminarayan
+<br>
+
+<img src="{{ profile_picture }}">
+<br>{{ profile_picture }}
+<br>
+
+
+{% if user.is_authenticated %}
+    <a href="/user/signout/" class="btn btn-success">Signout</a>
+{% endif %}

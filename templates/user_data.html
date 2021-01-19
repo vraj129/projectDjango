@@ -1,0 +1,28 @@
+<b>Profile:</b><br>
+<table>
+    {% for i,j in auth_user_data.items %}
+        <tr>
+            <td>{{ i }}</td>
+            <td>{{ j }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<hr>
+<table>
+    {% for i,j in socialaccount_socialaccount_data.items %}
+        <tr>
+            <td>{{ i }}</td>
+            <td>{{ j }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<hr>
+<table>
+    {% for i,j in socialaccount_socialaccount_extra_data.items %}
+        <tr>
+            <td>{{ i }}</td>
+            <td>{{ j }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{{ socialaccount_socialaccount_extra_data.picture }}

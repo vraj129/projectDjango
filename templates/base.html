@@ -1,0 +1,211 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% block meta %}
+            <meta name="description" content='Welcome to {{ project_name }}'>
+            <meta name="keywords" content="{{ project_name }}, {{ project_name }}">
+
+            <meta property="og:title" content="{{ project_name }}" />
+            <meta property="og:url" content="https url of current page" />
+
+            <meta property="og:description" content="Descriptiotn">
+            <meta property="og:image" content="https image url">
+        {% endblock %}
+
+        <!-- Title -->
+        {% block title %} <title>{{ project_name }}</title> {% endblock %}
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{% static 'images/logo/logo-no-text.png' %}">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+
+        <!-- Css -->
+        <link rel="stylesheet" href="{% static '/css/open-iconic-bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static '/css/animate.css' %}">
+
+        <link rel="stylesheet" href="{% static '/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static '/css/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" href="{% static '/css/magnific-popup.css' %}">
+
+        <link rel="stylesheet" href="{% static '/css/aos.css' %}">
+
+        <link rel="stylesheet" href="{% static '/css/ionicons.min.css' %}">
+
+        <link rel="stylesheet" href="{% static '/css/bootstrap-datepicker.css' %}">
+        <link rel="stylesheet" href="{% static '/css/jquery.timepicker.css' %}">
+
+        <link rel="stylesheet" href="{% static '/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static '/css/icomoon.css' %}">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all">
+
+        <style>
+#colorlib-aside{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+#colorlib-main-menu{
+    flex-shrink: 10;
+    height: 100%;
+    overflow: auto;
+}
+.colorlib-footer {
+    /* resize: vertical; */
+}
+        </style>
+
+    </head>
+    <body>
+
+        {% block sidebar %}
+            <div id="colorlib-page">
+                <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+
+                <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="overflow: auto;">
+                    <img src="{% static 'images/logo/logo-no-text.png' %}" height="auto" width="50" style="margin-top: -20px;">
+                    <nav id="colorlib-main-menu" role="navigation">
+                        <ul>
+                            <!-- <li class="colorlib-active"><a href="index.php">Home</a></li> -->
+                            <li class="active-index"><a href="../main/index.php">Home</a></li>
+                            <li class="active-articles"><a href="../main/articles.php">Articles <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a></li>
+                                <li class="active-media"><a href="../main/media.php">Media</a></li>
+                                <!-- <li class="active-media"><a href="../main/media.php">Media</a></li> -->
+                                <li class="active-media"><a href="../main/media.php">Media</a></li>
+                                <li class="active-media"><a href="../main/media.php">Media</a></li>
+                                <li class="active-media"><a href="../main/media.php">Media</a></li>
+                                <li class="active-media"><a href="../main/media.php">Media</a></li>
+                                <li class="active-about"><a href="../main/about.php">About</a></li>
+                                <li class="active-contact"><a href="../main/contact.php">Contact</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="colorlib-footer">
+                        <!-- <img src="{% static '/images/logo/logo.png' %}" width="130" height="130"> -->
+                        <p class="pfooter">
+                        Made by <a href="https://colorlib.com" target="_blank">Colorlib </a> and <a href="https://instagram.com/theunitedcodes" target="_blank"> {{ project_name }}</a>
+                        </p>
+                    </div>
+                </aside>
+            {% endblock %}
+
+            {% block content %}
+                <div id="colorlib-main">
+                    <section class="ftco-section ftco-no-pt ftco-no-pb">
+                        <div class="container">
+                            <div class="row d-flex">
+                                <div class="col-xl-8 py-5 px-md-5">
+                                    <h2 style="color: #1eafed; font-family: Verdana;" class="text-center">{{ project_name }}</h2>
+
+
+                                    <div class="row pt-md-4"> 
+                                        <div class="col-md-12"> 
+                                            <div class="blog-entry d-md-flex"> 
+                                                <a href="../articles/1-keylogger.php" class="img img-2" style="background-image: url({% static 'images/articles/keylogger/1-keylogger.jpg' %});"></a> 
+                                                <div class="text text-2 pl-md-4"> 
+                                                    <h3 class="mb-2"><a href="../articles/1-keylogger.php">Tricks to steal password using hackers keylogger, 100% working</a></h3> 
+                                                    <div class="meta-wrap"> 
+                                                        <p class="meta"> 
+                                                        <span><i class="icon-calendar mr-2"></i>Mar 23, 2020</span> 
+                                                        <span><a href="#"><i class="icon-folder-o mr-2"></i>Hacking</a></span> 
+                                                        </p> 
+                                                    </div> 
+                                                    <p class="mb-4">Keystroke Logging, often referred to as keylogging or keyboard capturing, is the action of recording the keys pressed on keyboard. The person using the keyboard is unaware that their actions are being monitorized. </p> 
+                                                    <p><a href="../articles/1-keylogger.php" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p> 
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                    <!-- END -->
+
+                                </div>
+
+                                {% block right_side %}
+                                    <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+                                        <div class="sidebar-box ftco-animate">
+                                            <h3 class="sidebar-heading">Categories</h3>
+                                            <ul class="categories">
+                                                <li><a href="#">Hacking <span>(1)</span></a></li>
+                                                <li><a href="#">Technology <span>(1)</span></a></li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="sidebar-box ftco-animate">
+                                            <h3 class="sidebar-heading">Popular Articles</h3>
+                                            <div class="block-21 mb-4 d-flex">
+                                                <a class="blog-img mr-4" style="background-image: url({% static 'images/articles/keylogger/1-keylogger.jpg' %});"></a>
+                                                <div class="text">
+                                                    <h3 class="heading"><a href="../articles/1-keylogger.php">Tricks to steal password </a></h3>
+                                                    <div class="meta">
+                                                        <div><span class="icon-calendar"></span> Mar 23, 2020</div>
+                                                        <div><a href="../main/about.php"><span class="icon-person"></span>Ajinkya Rathod</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="sidebar-box ftco-animate">
+                                            <h3 class="sidebar-heading">Paragraph</h3>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                            <p>Lorem ipsum dolor sit amet.</p>
+                                        </div>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </section>
+                </div><!-- END COLORLIB-MAIN -->
+            {% endblock %}
+
+            </div><!-- END COLORLIB-PAGE -->
+
+            {% block loader %}
+                <!-- loader -->
+                <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+            {% endblock %}
+
+            {% block javascript %}
+                <script src="{% static '/js/jquery.min.js' %}"></script>
+                <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+                <script src="{% static 'js/popper.min.js' %}"></script>
+                <script src="{% static 'js/bootstrap.min.js' %}"></script>
+                <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+                <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+                <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+                <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+                <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+                <script src="{% static 'js/aos.js' %}"></script>
+                <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+                <script src="{% static 'js/scrollax.min.js' %}"></script>
+                <script src="{% static 'js/google-map.js' %}"></script>
+                <script src="{% static 'js/main.js' %}"></script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+            {% endblock %}
+
+            {% block accept_cookies %}
+                <!-- Agree to cookies -->
+                <script type="text/javascript" id="cookieinfo" src="//cookieinfoscript.com/js/cookieinfo.min.js">
+                </script>
+            {% endblock %}
+
+    </body>
+</html>

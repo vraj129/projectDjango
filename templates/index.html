@@ -1,0 +1,31 @@
+{% load socialaccount %}
+<html>
+    <head>
+        <title>Google Registration | {{ project_name }}</title>
+    </head>
+    <body>
+        <h1>My Google Login Project</h1>
+        {% if user.is_authenticated %}
+            <a id="logout" href="/accounts/logout" class="btn btn-success">Logout</a>
+            <p>Welcome, {{ user.username }} !</p>
+            <p>Welcome, {{ user.id }} !</p>
+            <p>Welcome, {{ user.first_name }} !</p>
+            <p>Welcome, {{ user.last_name }} !</p>
+            <p>Welcome, {{ user.email }} !</p>
+        {% else %}
+            <div class="wrapper">
+                <div class="container">
+                    <h1>Welcome</h1>
+
+                    <form class="form">
+                        <input type="text" placeholder="Username">
+                        <input type="password" placeholder="Password">
+                        <button type="submit" id="login-button">Login</button>
+                    </form>
+                </div>
+            </div>
+            <a href="{% provider_login_url 'google' %}">Login with Google</a>
+        {% endif %}
+
+    </body>
+</html>
