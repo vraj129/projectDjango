@@ -75,6 +75,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Custom Context Processors
+                'website.context_processors.basic_data',
             ],
         },
     },
@@ -90,11 +93,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-           "name": "tuc",
-           "host": "mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority",
-           "username": "ajinzrathod",
-           "password": "ajinz812",
-           "authMechanism": "SCRAM-SHA-1",
+            "name": "tuc",
+            "host": "mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority",
+            "username": "ajinzrathod",
+            "password": "ajinz812",
+            "authMechanism": "SCRAM-SHA-1",
         },
     }
 }
@@ -176,3 +179,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 PROJECT_NAME = 'Djaley'
+DATABASE_NAME = 'tuc'
+
+
+DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '226075552951-hhfiilf9ogq6dkug05j7tkej5bl0kd4g.apps.googleusercontent.com'
+DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 'PRegkN6skeTe5k1LowOWVQ6_'

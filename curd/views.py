@@ -42,3 +42,10 @@ def base(request):
         'project_name': settings.PROJECT_NAME,
     }
     return render(request, 'base.html', data)
+
+
+def terms_and_conditions(request):
+    data = {
+        'project_name': settings.PROJECT_NAME,
+    }
+    return render(request, 'terms_and_conditions.html', data)

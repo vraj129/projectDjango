@@ -8,17 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 
 
-db_name = "tuc"
-my_database = settings.CLIENT[db_name]
+my_database = settings.CLIENT[settings.DATABASE_NAME]
 
 
 # Create your views here.
 
 @login_required
 def full_profile(request):
-    if User.last_login is None:
-        print("First Time")
-
     # Getting data from collection -> `auth_user`
     collection_name = "auth_user"
     my_collection = my_database[collection_name]
@@ -67,9 +63,14 @@ def profile_picture(request):
         except Extra_User_Detail.DoesNotExist:
             extra_user_detail = None
 
+        print("==================================")
+        print(extra_user_detail)
+
         # ===== Check if entry already exists | Ends =====
 
+        # If user pic DoesNotExists
         if extra_user_detail is None:
+            print("----------------------------------")
 
             # Getting `id` fo Currently Logged in User
             print(current_user.id)
@@ -126,22 +127,32 @@ def profile_picture(request):
             new_user_profile = Extra_User_Detail(user=username, image_url=path_to_save_image, locale=locale)
             new_user_profile.save();
 
-            data = {
-                'profile_picture': "/" + path_to_save_image,
-                'locale': locale,
-            }
-
-            return render(request, 'profile_picture.html', data)
+            # extra_profile_data = {
+            #     'profile_picture': "/" + path_to_save_image,
+            #     'locale': locale,
+            # }
+            # return redirect('/')
+            # return render(request, 'profile_picture.html', extra_profile_data)
 
         # If Image Already Exists
         else:
-            data = {
-                'profile_picture': "/" + extra_user_detail.image_url,
-                'locale': extra_user_detail.locale,
-            }
-            return render(request, 'profile_picture.html',data)
+            pass
+            # extra_profile_data = {
+            #     'profile_picture': "/" + extra_user_detail.image_url,
+            #     'locale': extra_user_detail.locale,
+            # }
+            # return redirect('/')
+            # return render(request, 'profile_picture.html', extra_profile_data)
     else:
         pass
+
+    if 'url_to_go' in request.session:
+        print("yusss")
+        return redirect(request.session.get('url_to_go'))
+    else:
+        print("nopee")
+        return redirect('/')
+
 
 def signout(request):
     auth.logout(request)

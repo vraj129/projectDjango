@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,24 +47,24 @@
         <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
         <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
 
+        <link rel="stylesheet" href="{% static 'css/mycss.css' %}">
 
         <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all">
+        <!-- Font icons -->
+        <script src="https://kit.fontawesome.com/3f22a23e0c.js" crossorigin="anonymous"></script>
 
         <style>
-#colorlib-aside{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-#colorlib-main-menu{
-    flex-shrink: 10;
-    height: 100%;
-    overflow: auto;
-}
-.colorlib-footer {
-    /* resize: vertical; */
-}
+.active-home{ font-weight: 600 !important; }
+.active-home a{ color: #1eafed !important; }
+.active-home a:after{
+    visibility: visible !important;
+    -webkit-transform: scaleX(1) !important;
+    -moz-transform: scaleX(1) !important;
+    -ms-transform: scaleX(1) !important;
+    -o-transform: scaleX(1) !important;
+    transform: scaleX(1) !important; }    
         </style>
+
 
     </head>
     <body>
@@ -77,12 +78,80 @@
                     <nav id="colorlib-main-menu" role="navigation">
                         <ul>
                             <!-- <li class="colorlib-active"><a href="index.php">Home</a></li> -->
-                            <li class="active-index"><a href="../main/index.php">Home</a></li>
-                            <li class="active-articles"><a href="../main/articles.php">Articles <i class="fa fa-plus" aria-hidden="true"></i>
-                                </a></li>
-                                <li class="active-media"><a href="../main/media.php">Media</a></li>
-                                <li class="active-about"><a href="../main/about.php">About</a></li>
-                                <li class="active-contact"><a href="../main/contact.php">Contact</a></li>
+                            <li class="active-home">
+                                <a href="../main/index.php">
+                                    <i class="fa fa-home" aria-hidden="true"></i> Home
+                                </a>
+                            </li>
+                            <li class="active-media">
+                                <a href="../main/media.php">
+                                    <i class="fas fa-hashtag"></i> Explore
+                                </a>
+                            </li>
+                            <li class="active-articles">
+                                <a href="../main/articles.php">
+                                    <i class="fas fa-location-arrow"></i> Latest 
+                                </a>
+                            </li>
+                            <li class="active-media">
+                                <a href="../main/media.php">
+                                    <i class="fab fa-hotjar"></i> Trending
+                                </a>
+                            </li>
+
+                            {% if user.is_authenticated %}
+                                {% if request.user.is_superuser %}
+                                    <hr>
+                                    <li class="active-media">
+                                        <a href="../main/media.php">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i> New
+                                        </a>
+                                    </li>
+
+                                {% endif %}
+                                <hr> <!-- HR -->
+                                <li class="active-media">
+                                    <a href="../main/media.php">
+                                        <i class="fas fa-bookmark"></i> Saved
+                                    </a>
+                                </li>
+                                <li class="active-media">
+                                    <a href="../main/media.php">
+                                        <i class="fas fa-bell"></i> Notifications
+                                        <span class="badge badge-danger">4</span>
+                                    </a>
+                                </li>
+
+                                <hr> <!-- HR -->
+                                <li class="active-media">
+                                    <a href="../main/media.php">
+                                        <i class="fas fa-user"></i> Profile
+                                    </a>
+                                </li>
+                                <li class="active-media">
+                                    <a href="../main/media.php">
+                                        <i class="fas fa-cog"></i> Settings
+                                    </a>
+                                </li>
+
+                                <li class="active-media profile_name">
+                                    <a href="#" title="{{ user.first_name}} {{ user.last_name }}" data-placement="top" data-toggle="popover" data-html="true" data-content="<a class='logout-text' href='/logout'>Logout of @{{ user.username }} </a>">
+                                        <img src="{{ profile_picture }}" alt="Profile Picture" class="profile_picture">{{ user.first_name }} {{ user.last_name }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <hr> <!-- HR -->
+                            <li class="active-about">
+                                <a href="../main/about.php">
+                                    <i class="fas fa-info-circle"></i> About
+                                </a>
+                            </li>
+                            <li class="active-contact">
+                                <a href="../main/contact.php">
+                                    <i class="fas fa-comment-alt"></i> Contact
+                                </a>
+                            </li>
                         </ul>
                     </nav>
 
@@ -95,116 +164,26 @@
                 </aside>
             {% endblock %}
 
-            {% block content %}
-                <div id="colorlib-main">
+            <div id="colorlib-main">
+                {% block section_and_div_start %}
                     <section class="ftco-section ftco-no-pt ftco-no-pb">
                         <div class="container">
                             <div class="row d-flex">
+                            {% endblock %}
+
+                            {% block third_div_after_section_starts %}
                                 <div class="col-xl-8 py-5 px-md-5">
-                                    <h2 style="color: #1eafed; font-family: Verdana;" class="text-center">{{ project_name }}</h2>
+                                {% endblock %}
+
+                                <h3 style="color: #1eafed; font-family: Lora, Arial;" class="text-center">{{ project_name }}</h3>
 
 
-                                    {% if user.is_authenticated %}
-                                        <div class="row pt-md-4"> 
-                                            <div class="col-md-12"> 
-                                                <div class="blog-entry d-md-flex"> 
-                                                    <a href="../articles/1-keylogger.php" class="img img-2" style="background-image: url({% static 'images/articles/keylogger/1-keylogger.jpg' %});"></a> 
-                                                    <div class="text text-2 pl-md-4"> 
-                                                        <h3 class="mb-2"><a href="../articles/1-keylogger.php">Tricks to steal password using hackers keylogger, 100% working</a></h3> 
-                                                        <div class="meta-wrap"> 
-                                                            <p class="meta"> 
-                                                            <span><i class="icon-calendar mr-2"></i>Mar 23, 2020</span> 
-                                                            <span><a href="#"><i class="icon-folder-o mr-2"></i>Hacking</a></span> 
-                                                            </p> 
-                                                        </div> 
-                                                        <p class="mb-4">Keystroke Logging, often referred to as keylogging or keyboard capturing, is the action of recording the keys pressed on keyboard. The person using the keyboard is unaware that their actions are being monitorized. </p> 
-                                                        <p><a href="../articles/1-keylogger.php" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p> 
-                                                    </div> 
-                                                </div> 
-                                            </div> 
-                                        </div> 
-                                    {% else %}
+                                {% block content %}
+                                {% endblock %}
 
-                                        <style>
-#main-signin{
-    border-radius: 20px;
-    max-width: 400px;
-    padding:10px;
-    font-size: 20pt;
-    background-color: #f5f5f5;
-    background-color: #F8F8FF;
-    box-shadow: 5px 5px 5px #aaaaaa;
-}
-                                        .loginBtn {
-                                            box-sizing: border-box;
-                                            position: relative;
-                                            /* width: 13em;  - apply for fixed size */
-                                            margin: 0.2em;
-                                            padding: 0 15px 0 46px;
-                                            border: none;
-                                            text-align: left;
-                                            line-height: 34px;
-                                            white-space: nowrap;
-                                            border-radius: 0.2em;
-                                            font-size: 16px;
-                                            color: #FFF;
-                                            transform: scale(1.2);
-                                        }
-                                        .loginBtn:before {
-                                            content: "";
-                                            box-sizing: border-box;
-                                            position: absolute;
-                                            top: 0;
-                                            left: 0;
-                                            width: 34px;
-                                            height: 100%;
-                                        }
-                                        .loginBtn:focus {
-                                            outline: none;
-                                        }
-                                        .loginBtn:active {
-                                            box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
-                                        }
-
-                                        .loginBtn--google {
-                                            /*font-family: "Roboto", Roboto, arial, sans-serif;*/
-                                            background: #DD4B39;
-                                        }
-                                        .loginBtn--google:before {
-                                            border-right: #BB3F30 1px solid;
-                                            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;
-                                        }
-                                        .loginBtn--google:hover,
-                                        .loginBtn--google:focus {
-                                            background: #E74B37;
-                                        }
-
-                                        #signin-text{
-                                            font-family: Lora;
-                                        }
-
-                                        #privacy-text{
-                                            text-align: justify;
-                                            font-size: 7pt;
-                                        }
-                                        </style>
-                                        <center>
-                                            <div id="main-signin">
-                                                <div>Please Sign in to continue</div>
-                                                <br>
-                                                <button class="loginBtn loginBtn--google">
-                                                    Login with Google
-                                                </button>
-                                                <br>
-                                                <br>
-                                                <div id="privacy-text">We respect your privacy.  We are committed to assuring the privacy of individuals who visit our web site. By using the {{ project_name }} or any of our products, services, features, tools, or resources, you agree to the terms of this Privacy Policy and our Terms of Use.</div>
-                                            </div>
-                                        </center>
-
-                                    {% endif %}
-                                    <!-- END -->
-
-                                </div>
+                                {% block third_div_after_section_ends %}
+                                    </div>
+                                {% endblock %}
 
                                 {% block right_side %}
                                     <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
@@ -234,24 +213,16 @@
                                             <h3 class="sidebar-heading">Paragraph</h3>
                                             <p>Lorem ipsum dolor sit amet.</p>
                                             <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
                                         </div>
                                     </div>
                                 {% endblock %}
-                            </div>
+
+                                {% block end_of_section_and_div %}
+                                </div>
                         </div>
+                    {% endblock %}
                     </section>
-                </div><!-- END COLORLIB-MAIN -->
-            {% endblock %}
+            </div><!-- END COLORLIB-MAIN -->
 
             </div><!-- END COLORLIB-PAGE -->
 
@@ -286,3 +257,11 @@
 
     </body>
 </html>
+
+
+
+<script>
+    $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+</script>

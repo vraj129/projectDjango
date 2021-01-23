@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load socialaccount %}
+
+{% block section_and_div_start %}
+{% endblock %}
+
+{% block third_div_after_section_starts %}
+{% endblock %}
+
+{% block content %}
+    <section class="ftco-section contact-section px-md-4">
+        <div class="container">
+            <div class="row block-9">
+                <h2 style="color: #1eafed; font-family: Verdana;" class="text-center">If you need, drop us a line</h2>
+
+                <div class="col-lg-12 d-flex">
+                    <form action="../main/tuc-mail.php" class="bg-light p-5 contact-form" id="tucForm" method="post" onsubmit="disableElements();">
+                        <!-- disableElements(); function is in contact.php -->
+                        {% if not user.is_authenticated %}
+                            <div class="form-group">
+                                <input type="name" class="form-control" placeholder="Your Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email'" required name="email">
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <textarea name="message" id="" cols="30" rows="10" class="form-control" placeholder="Message" required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5" id="sbtBtn">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block third_div_after_section_ends %}
+{% endblock %}
+
+{% block right_side %}
+{% endblock %}
+
+{% block end_of_section_and_div %}
+{% endblock %}

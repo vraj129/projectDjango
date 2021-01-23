@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('social_login.urls')),
+    path('social_login/', include('social_login.urls')),
+    path('', include('website.urls')),
     # path('', TemplateView.as_view(template_name="social_login/index.html")),
     path('user/', include('users.urls')),
     path('accounts/', include('allauth.urls')),
