@@ -53,6 +53,8 @@
         <!-- Font icons -->
         <script src="https://kit.fontawesome.com/3f22a23e0c.js" crossorigin="anonymous"></script>
 
+        {% block head_content %}
+        {% endblock %}
         <style>
 .active-home{ font-weight: 600 !important; }
 .active-home a{ color: #1eafed !important; }
@@ -79,22 +81,22 @@
                         <ul>
                             <!-- <li class="colorlib-active"><a href="index.php">Home</a></li> -->
                             <li class="active-home">
-                                <a href="../main/index.php">
+                                <a href="/">
                                     <i class="fa fa-home" aria-hidden="true"></i> Home
                                 </a>
                             </li>
                             <li class="active-media">
-                                <a href="../main/media.php">
+                                <a href="/explore">
                                     <i class="fas fa-hashtag"></i> Explore
                                 </a>
                             </li>
                             <li class="active-articles">
-                                <a href="../main/articles.php">
+                                <a href="/latest">
                                     <i class="fas fa-location-arrow"></i> Latest 
                                 </a>
                             </li>
                             <li class="active-media">
-                                <a href="../main/media.php">
+                                <a href="/trending">
                                     <i class="fab fa-hotjar"></i> Trending
                                 </a>
                             </li>
@@ -103,7 +105,7 @@
                                 {% if request.user.is_superuser %}
                                     <hr>
                                     <li class="active-media">
-                                        <a href="../main/media.php">
+                                        <a href="/new">
                                             <i class="fa fa-plus-circle" aria-hidden="true"></i> New
                                         </a>
                                     </li>
@@ -111,12 +113,12 @@
                                 {% endif %}
                                 <hr> <!-- HR -->
                                 <li class="active-media">
-                                    <a href="../main/media.php">
+                                    <a href="/saved">
                                         <i class="fas fa-bookmark"></i> Saved
                                     </a>
                                 </li>
                                 <li class="active-media">
-                                    <a href="../main/media.php">
+                                    <a href="/notifications">
                                         <i class="fas fa-bell"></i> Notifications
                                         <span class="badge badge-danger">4</span>
                                     </a>
@@ -124,12 +126,12 @@
 
                                 <hr> <!-- HR -->
                                 <li class="active-media">
-                                    <a href="../main/media.php">
+                                    <a href="/profile">
                                         <i class="fas fa-user"></i> Profile
                                     </a>
                                 </li>
                                 <li class="active-media">
-                                    <a href="../main/media.php">
+                                    <a href="/settings">
                                         <i class="fas fa-cog"></i> Settings
                                     </a>
                                 </li>
@@ -143,12 +145,12 @@
 
                             <hr> <!-- HR -->
                             <li class="active-about">
-                                <a href="../main/about.php">
+                                <a href="/about">
                                     <i class="fas fa-info-circle"></i> About
                                 </a>
                             </li>
                             <li class="active-contact">
-                                <a href="../main/contact.php">
+                                <a href="/contact">
                                     <i class="fas fa-comment-alt"></i> Contact
                                 </a>
                             </li>
@@ -255,13 +257,16 @@
                 </script>
             {% endblock %}
 
+            {% block scripts %}
+            {% endblock %}
+
+            <script>
+                $(document).ready(function(){
+                                    $('[data-toggle="popover"]').popover();
+                                });
+            </script>
     </body>
 </html>
 
 
 
-<script>
-    $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();
-        });
-</script>

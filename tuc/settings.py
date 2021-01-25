@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     # UserOtherDetail
     'extra_user_detail.apps.ExtraUserDetailConfig',
+    'article.apps.ArticleConfig'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,92 @@
+fieldset {
+    border: 1px none #ddd !important;
+    padding: 0 2px 2px 2px !important;
+    /*margin: 0 0 1.5em 0 !important;*/
+    /*-webkit-box-shadow:  3px 3px 3px 3px #ddd;*/
+    /*box-shadow:  3px 3px 3px 3px #ddd;*/
+    margin: 10px 0px;
+}
+
+input[type=text] {
+    border: 0;
+    border-bottom: 2px solid #ddd;
+    font-size: 13px;
+    padding: 0 13px;
+}
+
+legend {
+    font-size: 13px !important;
+    /*font-weight: bold !important;*/
+    text-align: left !important;
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+}
+
+body {
+    /*margin-bottom: 60px;*/
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    /* z-index: 10; */
+    /*Set the fixed height of the footer here */
+    /*height: 60px;  */
+    /*Vertically center the text there*/
+    line-height: 50px;
+    /*background-color:red*/;
+}
+
+#footer .row {
+    justify-content: space-around;
+}
+
+.xs-g-gap {
+    grid-gap: 2px;
+}
+
+.sm-g-gap {
+    grid-gap: 10px;
+}
+
+.md-g-gap {
+    grid-gap: 15px;
+}
+
+.lg-g-gap {
+    grid-gap: 20px;
+}
+
+.btn {
+    background-color: #e8e8e8;
+}
+
+.btn:hover {
+    transform: scale(1.15);
+    background-color: #f8f8f8;
+}
+
+@media only screen and (max-width: 141280px) {
+    #footer {
+        width: 581px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #footer {
+        width: 624px;
+    }
+}
+
+@media only screen and (max-width: 768) {
+    #footer {
+        width: 510px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    #footer {
+        width: 304px;
+    }
+}

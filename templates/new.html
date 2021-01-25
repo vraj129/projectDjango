@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_content %}
+    <link href="{% static 'css/mycss_for_new.css' %}" rel="stylesheet" type="text/css" media="all">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
+{% load static %}
+{% load socialaccount %}
+
+{% block content %}
+    {% if request.user.is_superuser %}
+        <!-- Toggleable / Dynamic Pills -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#write"><i class="fa fa-pencil" aria-hidden="true"></i>
+                    Write</a>
+            </li>
+            <li class="nav-item" id="preview-nav">
+                <a class="nav-link" data-toggle="tab" href="#preview"><i class="fa fa-eye" aria-hidden="true"></i>
+                    Preview</a>
+            </li>
+        </ul>
+        <!-- <h6 style="color: #1eafed; font-family: Verdana;" class="text-center" id="ajh6">The United Codes</h6> -->
+
+
+        <div class="tab-content">
+
+            <div id="write" class="container tab-pane active"><br>
+                <div>
+
+                    <fieldset>
+                        <legend><i class="fa fa-file-o" aria-hidden="true"></i></legend>
+                        <input placeholder="File Name" type="text" name="headline" style="width: 100%;" maxlength="">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fa fa-header" aria-hidden="true"></i></legend>
+                        <input type="text" name="headline" placeholder="Headline" style="width: 100%;" maxlength="">
+                    </fieldset>
+
+                </div>
+
+
+                <div class="container" id="footer">
+                    <div>
+                        <div class="row xs-g-gap">
+                            <div class="text-center">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add Sub-Heading"><i class="fa fa-heading" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="text-center mr-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add Paragraph"><i class="fa fa-paragraph" aria-hidden="true" style="color: #292b2c;"></i></button>
+                            </div>
+                            <div class="text-center ml-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add List"><i class="fa fa-list" aria-hidden="true" style="color: green;"></i></button>
+                            </div>
+                            <div class="text-center mr-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add List"><i class="fa fa-list-ol" aria-hidden="true" style="color: green;"></i></button>
+                            </div>
+                            <div class="text-center ml-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Embed Youtube Video"><i class="fa fa-youtube-play" aria-hidden="true" style="color: red;"></i></button>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Embed Tweet"><i class="fa fa-twitter" aria-hidden="true" style="color: #00acee;"></i></button>
+                            </div>
+                        </div>
+                        <div class="row xs-g-gap">
+                            <div class="text-center">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add Blockquote"><i class="fa fa-quote-left" aria-hidden="true" style="color: #b5b5b5;"></i></button>
+                            </div>
+                            <div class="text-center mr-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Create hyperlink"><i class="fa fa-link" aria-hidden="true" style="color: #1eafed;"></i></button>
+                            </div>
+                            <div class="text-center ml-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add Code"><i class="fa fa-code" aria-hidden="true" style="color: #808080;"></i></button>
+                            </div>
+                            <div class="text-center mr-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add info or alert boxes"><i class="fa fa-info-circle" aria-hidden="true" style="color: #f0ad4e;"></i></button>
+                            </div>
+                            <div class="text-center ml-1">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Insert Image"><i class="fa fa-picture-o" aria-hidden="true" style="color: #5bc0de;"></i></button>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add table"><i class="fa fa-table" aria-hidden="true" style="color: teal;"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="preview" class="container tab-pane fade"><br>
+                <h3>Preview</h3>
+                <p>Default</p>
+            </div>
+
+        </div> <!-- End of tab-content -->
+
+    {% endif %}
+    <!-- END -->
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+                    $("#preview-nav").click(function() {
+                                // $("#preview").load(location.href + " #preview > *");
+                                $("#preview").load('{% static "demo.html" %}');
+                            });
+                });
+    </script>
+{% endblock %}

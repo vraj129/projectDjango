@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('website.urls')),
     # path('', TemplateView.as_view(template_name="social_login/index.html")),
     path('user/', include('users.urls')),
+    path('article/', include('article.urls')),
     path('accounts/', include('allauth.urls')),
     path('curd/', include('curd.urls')),
 ]

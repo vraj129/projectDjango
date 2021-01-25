@@ -12,6 +12,11 @@ def home(request):
     return render(request, 'home.html')
 
 
+def new(request):
+    request.session['url_to_go'] = request.path
+    return render(request, 'new.html')
+
+
 # def explore(request):
 #     request.session['url_to_go'] = request.path
 #     return render(request, 'explore.html')
