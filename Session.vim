@@ -11,17 +11,11 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit tuc/urls.py
+edit ~/Documents/Git/tuc-django/tuc/static/demo.html
 set splitbelow splitright
 wincmd _ | wincmd |
 split
-wincmd _ | wincmd |
-split
-wincmd _ | wincmd |
-split
-3wincmd k
-wincmd w
-wincmd w
+1wincmd k
 wincmd w
 set nosplitbelow
 set nosplitright
@@ -41,33 +35,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 26 - ((3 * winheight(0) + 4) / 8)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-26
-normal! 037|
-wincmd w
-argglobal
-if bufexists("templates/articles/default.html") | buffer templates/articles/default.html | else | edit templates/articles/default.html | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 4) / 8)
+let s:l = 1 - ((0 * winheight(0) + 8) / 17)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 1
-normal! 07|
+normal! 014|
 wincmd w
 argglobal
-if bufexists("article/urls.py") | buffer article/urls.py | else | edit article/urls.py | endif
+if bufexists("templates/new.html") | buffer templates/new.html | else | edit templates/new.html | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -77,46 +53,26 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 6 - ((5 * winheight(0) + 4) / 8)
+let s:l = 126 - ((11 * winheight(0) + 8) / 16)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-6
-normal! 0
+126
+normal! 061|
 wincmd w
-argglobal
-if bufexists("article/views.py") | buffer article/views.py | else | edit article/views.py | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 6 - ((3 * winheight(0) + 3) / 7)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-6
-normal! 045|
-wincmd w
-3wincmd w
 wincmd =
 tabnext 1
-badd +2 article/models.py
-badd +5 article/admin.py
-badd +1 article/apps.py
-badd +0 templates/home.html
-badd +127 templates/base.html
-badd +26 extra_user_detail/models.py
-badd +53 tuc/settings.py
-badd +7 article/urls.py
-badd +3 curd/urls.py
-badd +6 article/views.py
-badd +1 templates/articles/default.html
-badd +0 tuc/urls.py
+badd +14 templates/article.html
+badd +12 templates/base.html
+badd +7 templates/home.html
+badd +18 website/views.py
+badd +17 article/views.py
+badd +29 tuc/settings.py
+badd +22 tuc/urls.py
+badd +126 templates/new.html
+badd +12 __doc__
+badd +106 users/views.py
+badd +1 ~/Documents/Git/tuc-django/tuc/static/demo.html
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

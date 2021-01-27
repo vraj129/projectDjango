@@ -8376,9 +8376,9 @@ h1, h2, h3, h4, h5,
   cursor: pointer;
   text-decoration: none; }
   .colorlib-nav-toggle.active i::before, .colorlib-nav-toggle.active i::after {
-    background: #000000; }
+    background: #007bff; }
   .colorlib-nav-toggle.dark.active i::before, .colorlib-nav-toggle.dark.active i::after {
-    background: #000000; }
+    background: #007bff; }
   .colorlib-nav-toggle:hover, .colorlib-nav-toggle:focus, .colorlib-nav-toggle:active {
     outline: none;
     border-bottom: none !important; }
@@ -8387,11 +8387,11 @@ h1, h2, h3, h4, h5,
     display: inline-block;
     width: 30px;
     height: 2px;
-    color: #000000;
+    color: #007bff;
     font: bold 14px/.4 Helvetica;
     text-transform: uppercase;
     text-indent: -55px;
-    background: #000000;
+    background: #007bff;
     -webkit-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
     transition: all .2s ease-out; }
@@ -8399,7 +8399,7 @@ h1, h2, h3, h4, h5,
       content: '';
       width: 30px;
       height: 2px;
-      background: #000000;
+      background: #007bff;
       position: absolute;
       left: 0;
       -moz-transition: all 0.2s ease;
@@ -8409,13 +8409,13 @@ h1, h2, h3, h4, h5,
       transition: all 0.2s ease; }
   .colorlib-nav-toggle.dark i {
     position: relative;
-    color: #000000;
-    background: #000000;
+    color: #007bff;
+    background: #007bff;
     -webkit-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
     transition: all .2s ease-out; }
     .colorlib-nav-toggle.dark i::before, .colorlib-nav-toggle.dark i::after {
-      background: #000000;
+      background: #007bff;
       -moz-transition: all 0.2s ease;
       -o-transition: all 0.2s ease;
       -webkit-transition: all 0.2s ease;

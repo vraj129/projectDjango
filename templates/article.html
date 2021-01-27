@@ -1,5 +1,56 @@
-Jai Swaminarayan
-{{ this_article.title }}
-{{ this_article.meta_keywords }}
-{{ this_article.meta_current_page_url }}
-{{ this_article.meta_description }}
+{% extends 'base.html' %}
+
+{% load static %}
+{% load socialaccount %}
+
+{% block meta %}
+    <meta name="description" content='{{ this_article.meta_description }}'>
+    <meta name="keywords" content="{{ meta_keywords }}">
+
+    <meta property="og:title" content="{{ this_article.title }}" />
+    <meta property="og:url" content="{{ this_article.meta_current_page_url }}" />
+
+    <meta property="og:description" content="{{ this_article.meta_description }}">
+    <meta property="og:image" content="{{ this_article.meta_image_url }}">
+{% endblock %}
+
+{% block third_div_after_section_starts %}
+    <div class="col-lg-8 px-md-5 py-5">
+    {% endblock %}
+
+    {% block content %}
+
+        {% if user.is_authenticated %}
+            <div class="row pt-md-4">
+                <div class="container">
+                    Jai Swaminarayan
+                    Jai Swaminarayan
+                    Jai Swaminarayan
+                    Jai Swaminarayan
+                    Jai Swaminarayan
+                    Jai Swaminarayan
+                </div>
+            </div>
+        {% else %}
+
+            <center>
+                <div id="main-signin">
+                    <div id="signin-text">Please Sign in to continue</div>
+                    <a href="{% provider_login_url 'google' %}">
+                        <button class="loginBtn loginBtn--google">
+                            <i class="fa fa-google fa-fw"></i> Signin with Google
+                        </button>
+                    </a>
+                    <br>
+                    <br>
+                    <div id="privacy-text">We respect your privacy.  We are committed to assuring the privacy of individuals who visit our web site. By using the {{ project_name }} or any of our products, services, features, tools, or resources, you agree to the terms of our Privacy Policy and our <a href="../tnc/">Terms and Conditions </a>of Use.</div>
+                </div>
+            </center>
+
+        {% endif %}
+        <!-- END -->
+    {% endblock %}
+
+    {% block third_div_after_section_ends %}
+        </div>
+    {% endblock %}

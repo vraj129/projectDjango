@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
+from django.http import Http404
 
 
 def base(request):
@@ -13,6 +14,9 @@ def home(request):
 
 
 def new(request):
+    if not request.user.is_superuser:
+        # raise Http404("Not a superuser")
+        raise Http404
     request.session['url_to_go'] = request.path
     return render(request, 'new.html')
 

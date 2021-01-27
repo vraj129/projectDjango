@@ -3,6 +3,29 @@
 {% load static %}
 
 {% block head_content %}
+    <style>
+.active-new{ font-weight: 600 !important; }
+.active-new a{ color: #1eafed !important; }
+.active-new a:after{
+    visibility: visible !important;
+    -webkit-transform: scaleX(1) !important;
+    -moz-transform: scaleX(1) !important;
+    -ms-transform: scaleX(1) !important;
+    -o-transform: scaleX(1) !important;
+    transform: scaleX(1) !important; }    
+
+    .textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        border:1px solid #999999;
+        width:100%;
+        margin:5px 0;
+        padding:3px;
+    }
+
+    </style>
     <link href="{% static 'css/mycss_for_new.css' %}" rel="stylesheet" type="text/css" media="all">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
@@ -30,17 +53,70 @@
 
             <div id="write" class="container tab-pane active"><br>
                 <div>
-
                     <fieldset>
-                        <legend><i class="fa fa-file-o" aria-hidden="true"></i></legend>
-                        <input placeholder="File Name" type="text" name="headline" style="width: 100%;" maxlength="">
+                        <legend class="align-left"><i class="fas fa-code"></i></legend>
+                        <span class="align-right"><input type="button" class="btn btn-primary btn-sm" value="Publish" data-target="#confirmation-box" data-toggle="modal"></span>
+                        <div style="clear: both;"></div>
+                        <textarea id="codeContent" class="textarea" name="" cols="100%" rows="5" placeholder="Code"></textarea>
                     </fieldset>
 
                     <fieldset>
                         <legend><i class="fa fa-header" aria-hidden="true"></i></legend>
-                        <input type="text" name="headline" placeholder="Headline" style="width: 100%;" maxlength="">
+                        <input placeholder="Title" type="text" name="title" style="width: 100%;" maxlength="80">
                     </fieldset>
 
+                    <fieldset>
+                        <legend><i class="fab fa-battle-net"></i></legend>
+                        <input type="text" name="url_title" placeholder="URL Title Without Spaces" style="width: 100%;" maxlength="80">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fas fa-tags"></i></legend>
+                        <input type="text" name="meta_keywords" placeholder="Meta Keywords" style="width: 100%;" maxlength="">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fas fa-link"></i></legend>
+                        <input type="text" name="meta_current_page_url" placeholder="Meta Current Page Url" style="width: 100%;" maxlength="511">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="fas fa-info-circle"></i></legend>
+                        <textarea class="textarea" name="meta_description" cols="100%" rows="2" placeholder="Meta Description" maxlength="165"></textarea>
+                        <!-- https://stackoverflow.com/questions/4459610/set-maxlength-in-html-textarea -->
+                    </fieldset>
+
+                    <input type="button" value="Publish" data-toggle="modal" class="btn btn-primary" data-target="#confirmation-box">
+
+                    <!-- Modal Starts -->
+                    <div class="modal fade" id="confirmation-box" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Confirm Publish?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-primary">Are you sure you want to Publish?</p>
+                                    <p class="text-secondary">Article Link will be live at:</p>
+                                    <span class="align-left">
+                                        <p class="bg-light text-dark" id="link-to-copy">https://www.{{ profile_name }}.com/article/my-long-long-title-to-Publish-live-article</p>
+                                    </span>
+                                    <span class="align-right copy-link" onclick="copyLinkToClipboard()" id="copy-Link">Copy Link <i class="far fa-clone"></i></span>
+                                    <div style="clear: both;"></div>
+                                    <p id="clipboard-copy-status" class="text-success"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Publish</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Ends-->
+                    <div id="space-at-last"></div>
                 </div>
 
 
@@ -112,8 +188,40 @@
         $(document).ready(function() {
                     $("#preview-nav").click(function() {
                                 // $("#preview").load(location.href + " #preview > *");
-                                $("#preview").load('{% static "demo.html" %}');
+                                // $("#preview").load('{% static "demo.html" %}');
+                                // var b = $('#codeContent').html(a);
+                                var codeContentValue = document.getElementById("codeContent");
+                                var s = codeContentValue.value;
+
+                                var finalpreview = document.getElementById("preview");
+                                finalpreview.innerHTML = s;
                             });
                 });
+
+                $(function() {
+                            $("textarea[maxlength]").bind('input propertychange', function() {
+                                        var maxLength = $(this).attr('maxlength');
+                                        if ($(this).val().length > maxLength) {
+                                                    $(this).val($(this).val().substring(0, maxLength));
+                                                }
+                                    })
+                        });
+
+    </script>
+
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+                    $('#myInput').trigger('focus')
+                })
+
+                function copyLinkToClipboard() {
+                    var range = document.createRange();
+                    range.selectNode(document.getElementById("link-to-copy"));
+                    window.getSelection().removeAllRanges(); // clear current selection
+                    window.getSelection().addRange(range); // to select text
+                    document.execCommand("copy");
+                    window.getSelection().removeAllRanges();// to deselect
+                    document.getElementById("clipboard-copy-status").innerHTML = "Link Copied to Clipboard!"
+                }
     </script>
 {% endblock %}

@@ -3,6 +3,20 @@
 {% load static %}
 {% load socialaccount %}
 
+{% block head_content %}
+<style>
+.active-home{ font-weight: 600 !important; }
+.active-home a{ color: #1eafed !important; }
+.active-home a:after{
+    visibility: visible !important;
+    -webkit-transform: scaleX(1) !important;
+    -moz-transform: scaleX(1) !important;
+    -ms-transform: scaleX(1) !important;
+    -o-transform: scaleX(1) !important;
+    transform: scaleX(1) !important; }    
+</style>
+{% endblock %}
+
 {% block content %}
     {% if user.is_authenticated %}
         <div class="row pt-md-4">
