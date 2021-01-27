@@ -14,6 +14,16 @@
     -o-transform: scaleX(1) !important;
     transform: scaleX(1) !important; }    
 
+    #publishButton[disabled]:hover {
+    background: #d9534f  !important;
+    border-color: #d9534f !important;
+    color: white;
+    cursor: not-allowed;
+}
+    #publishButton[disabled]:hover::before {
+      content: "Please save before you " !important;
+}
+
     .textarea {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -53,12 +63,24 @@
 
             <div id="write" class="container tab-pane active"><br>
                 <div>
+
                     <fieldset>
-                        <legend class="align-left"><i class="fas fa-code"></i></legend>
-                        <span class="align-right"><input type="button" class="btn btn-primary btn-sm" value="Publish" data-target="#confirmation-box" data-toggle="modal"></span>
-                        <div style="clear: both;"></div>
-                        <textarea id="codeContent" class="textarea" name="" cols="100%" rows="5" placeholder="Code"></textarea>
+                        <div class="input-group mb-3">
+                            <input type="text" placeholder="File Name" class="" id="file-name" maxlength="80">
+                            <div class="input-group-append">
+                                <span class="input-group-text">.html</span>
+                            </div>
+                        </div>
+                        <textarea id="codeContent" class="textarea" name="" cols="100%" rows="5" placeholder="Code" onkeypress="disable_publish_before_save()"></textarea>
                     </fieldset>
+                    <p id="saving-status" class="text-muted"></p>
+
+                    <button class="btn btn-sm align-left" id="sender">Save as Draft</button>
+
+                    <span class="align-right"><button type="button" class="btn btn-primary btn-sm" data-target="#confirmation-box" data-toggle="modal" id="publishButton">Publish</button></span>
+
+                    <div style="clear: both;"></div>
+                    <hr>
 
                     <fieldset>
                         <legend><i class="fa fa-header" aria-hidden="true"></i></legend>
@@ -86,7 +108,12 @@
                         <!-- https://stackoverflow.com/questions/4459610/set-maxlength-in-html-textarea -->
                     </fieldset>
 
-                    <input type="button" value="Publish" data-toggle="modal" class="btn btn-primary" data-target="#confirmation-box">
+                    <fieldset>
+                        <legend><i class="far fa-image"></i></legend>
+                        <input type="text" name="meta_image_url" placeholder="Meta Image Url" style="width: 100%;" maxlength="200">
+                    </fieldset>
+
+                    <!-- <input type="button" value="Publish" data-toggle="modal" class="btn btn-primary" data-target="#confirmation-box"> -->
 
                     <!-- Modal Starts -->
                     <div class="modal fade" id="confirmation-box" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -215,13 +242,43 @@
                 })
 
                 function copyLinkToClipboard() {
-                    var range = document.createRange();
-                    range.selectNode(document.getElementById("link-to-copy"));
-                    window.getSelection().removeAllRanges(); // clear current selection
-                    window.getSelection().addRange(range); // to select text
-                    document.execCommand("copy");
-                    window.getSelection().removeAllRanges();// to deselect
-                    document.getElementById("clipboard-copy-status").innerHTML = "Link Copied to Clipboard!"
+                            var range = document.createRange();
+                            range.selectNode(document.getElementById("link-to-copy"));
+                            window.getSelection().removeAllRanges(); // clear current selection
+                            window.getSelection().addRange(range); // to select text
+                            document.execCommand("copy");
+                            window.getSelection().removeAllRanges();// to deselect
+                            document.getElementById("clipboard-copy-status").innerHTML = "Link Copied to Clipboard!"
+                        }
+    </script>
+
+    <script>
+
+        $("#sender").click(function () {
+                    var filename = $('#file-name').val();
+                    var codeContent = $('#codeContent').val();
+
+                    $.ajax({
+                                url: '{% url 'get_response' %}',
+                                data: {
+                                            'filename': filename,
+                                            'codeContent': codeContent,
+                                        },
+                                dataType: 'json',
+                                success: function (response_data) {
+                                            document.getElementById('saving-status').innerHTML = response_data["response"];
+                                        }
+                            });
+                    $("#publishButton").removeAttr("disabled");
+                });
+    </script>
+
+    <script>
+        function disable_publish_before_save(){
+                    document.getElementById('publishButton').disabled=true;
+                    document.getElementById('saving-status').innerText="Not saved";
                 }
     </script>
+
+
 {% endblock %}

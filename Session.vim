@@ -11,11 +11,14 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit ~/Documents/Git/tuc-django/tuc/static/demo.html
+edit website/views.py
 set splitbelow splitright
 wincmd _ | wincmd |
 split
-1wincmd k
+wincmd _ | wincmd |
+split
+2wincmd k
+wincmd w
 wincmd w
 set nosplitbelow
 set nosplitright
@@ -35,12 +38,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 8) / 17)
+let s:l = 31 - ((5 * winheight(0) + 5) / 11)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 014|
+31
+normal! 0
 wincmd w
 argglobal
 if bufexists("templates/new.html") | buffer templates/new.html | else | edit templates/new.html | endif
@@ -53,26 +56,41 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 126 - ((11 * winheight(0) + 8) / 16)
+let s:l = 60 - ((5 * winheight(0) + 5) / 10)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-126
-normal! 061|
+60
+normal! 033|
 wincmd w
+argglobal
+if bufexists("templates/publish.html") | buffer templates/publish.html | else | edit templates/publish.html | endif
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 2 - ((1 * winheight(0) + 5) / 11)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+2
+normal! 0
+wincmd w
+2wincmd w
 wincmd =
 tabnext 1
+badd +28 article/models.py
 badd +14 templates/article.html
-badd +12 templates/base.html
-badd +7 templates/home.html
-badd +18 website/views.py
-badd +17 article/views.py
-badd +29 tuc/settings.py
-badd +22 tuc/urls.py
-badd +126 templates/new.html
-badd +12 __doc__
-badd +106 users/views.py
-badd +1 ~/Documents/Git/tuc-django/tuc/static/demo.html
+badd +56 templates/new.html
+badd +2 templates/publish.html
+badd +659 ~/.vimrc
+badd +8 website/urls.py
+badd +31 website/views.py
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -84,7 +102,6 @@ if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
