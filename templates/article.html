@@ -5,7 +5,7 @@
 
 {% block meta %}
     <meta name="description" content='{{ this_article.meta_description }}'>
-    <meta name="keywords" content="{{ meta_keywords }}">
+    <meta name="keywords" content="{{ this_article.meta_keywords }}">
 
     <meta property="og:title" content="{{ this_article.title }}" />
     <meta property="og:url" content="{{ this_article.meta_current_page_url }}" />
@@ -24,29 +24,15 @@
             <div class="row pt-md-4">
                 <div class="container">
                     Jai Swaminarayan
-                    Jai Swaminarayan
-                    Jai Swaminarayan
-                    Jai Swaminarayan
-                    Jai Swaminarayan
-                    Jai Swaminarayan
+                    <br>{{ this_article.file_location }}
+                    <br>{{ this_article.title }}
+                    <br>{{ this_article.views_count }}
+                    <br>{{ this_article.date_modified }}
+                    <br>{{ this_article.date_created }}
                 </div>
             </div>
         {% else %}
-
-            <center>
-                <div id="main-signin">
-                    <div id="signin-text">Please Sign in to continue</div>
-                    <a href="{% provider_login_url 'google' %}">
-                        <button class="loginBtn loginBtn--google">
-                            <i class="fa fa-google fa-fw"></i> Signin with Google
-                        </button>
-                    </a>
-                    <br>
-                    <br>
-                    <div id="privacy-text">We respect your privacy.  We are committed to assuring the privacy of individuals who visit our web site. By using the {{ project_name }} or any of our products, services, features, tools, or resources, you agree to the terms of our Privacy Policy and our <a href="../tnc/">Terms and Conditions </a>of Use.</div>
-                </div>
-            </center>
-
+            {% include 'signin.html' %}
         {% endif %}
         <!-- END -->
     {% endblock %}

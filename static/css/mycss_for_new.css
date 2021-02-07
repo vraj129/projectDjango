@@ -1,3 +1,25 @@
+/* */
+#publishButton[disabled]:hover {
+    background: #d9534f  !important;
+    border-color: #d9534f !important;
+    color: white;
+    cursor: not-allowed;
+}
+#publishButton[disabled]:hover::before {
+    content: "Please save before you " !important;
+}
+
+.textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    border:1px solid #999999;
+    width:100%;
+    margin:5px 0;
+    padding:3px;
+}
+
 fieldset {
     border: 1px none #ddd !important;
     padding: 0 2px 2px 2px !important;
@@ -92,3 +114,5 @@ body {
         width: 304px;
     }
 }
+
+

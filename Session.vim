@@ -11,14 +11,11 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit website/views.py
+edit article/models.py
 set splitbelow splitright
 wincmd _ | wincmd |
 split
-wincmd _ | wincmd |
-split
-2wincmd k
-wincmd w
+1wincmd k
 wincmd w
 set nosplitbelow
 set nosplitright
@@ -38,15 +35,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 31 - ((5 * winheight(0) + 5) / 11)
+let s:l = 13 - ((8 * winheight(0) + 8) / 17)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-31
-normal! 0
+13
+normal! 05|
 wincmd w
 argglobal
-if bufexists("templates/new.html") | buffer templates/new.html | else | edit templates/new.html | endif
+if bufexists("website/views.py") | buffer website/views.py | else | edit website/views.py | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -56,41 +53,31 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 60 - ((5 * winheight(0) + 5) / 10)
+let s:l = 96 - ((4 * winheight(0) + 8) / 16)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-60
-normal! 033|
-wincmd w
-argglobal
-if bufexists("templates/publish.html") | buffer templates/publish.html | else | edit templates/publish.html | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 5) / 11)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-2
-normal! 0
+96
+normal! 020|
 wincmd w
 2wincmd w
 wincmd =
 tabnext 1
-badd +28 article/models.py
-badd +14 templates/article.html
-badd +56 templates/new.html
+badd +112 website/views.py
+badd +45 templates/home.html
+badd +35 templates/article.html
+badd +1 templates/signin.html
+badd +261 templates/new.html
+badd +7 article/models.py
 badd +2 templates/publish.html
-badd +659 ~/.vimrc
-badd +8 website/urls.py
-badd +31 website/views.py
+badd +12 templates/user_data.html
+badd +17 website/urls.py
+badd +1 templates/articles/Swaminarayan.html
+badd +1 static/css/mycss_for_new.css
+badd +1 templates/articles/Ajin.html
+badd +1 curd/views.py
+badd +119 users/views.py
+badd +17 article/views.py
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -102,6 +89,7 @@ if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
