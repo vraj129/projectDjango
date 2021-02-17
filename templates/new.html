@@ -42,13 +42,15 @@
             <div id="write" class="container tab-pane active"><br>
                 <div>
 
+                    <strong>PermaLink:</strong> articles/{{ request.session.url_title }}<br>
+                    <strong>Filename:</strong> {{ request.session.file_name }}.html
                     <fieldset>
-                        <div class="input-group mb-3">
-                            <input type="text" placeholder="File Name" class="" id="file-name" maxlength="80">
-                            <div class="input-group-append">
-                                <span class="input-group-text">.html</span>
-                            </div>
-                        </div>
+                        <!-- <div class="input-group mb-3"> -->
+                        <!--     <input type="text" placeholder="File Name" class="" id="file-name" maxlength="80"> -->
+                        <!--     <div class="input-group-append"> -->
+                        <!--         <span class="input-group-text">.html</span> -->
+                        <!--     </div> -->
+                        <!-- </div> -->
                         <textarea id="codeContent" class="textarea" name="" cols="100%" rows="5" placeholder="Code" onkeypress="disable_publish_before_save()"></textarea>
                     </fieldset>
                     <p id="saving-status" class="text-muted"></p>
@@ -63,11 +65,6 @@
                     <fieldset>
                         <legend><i class="fa fa-header" aria-hidden="true"></i></legend>
                         <input placeholder="Title" type="text" name="title" id="publish_title" style="width: 100%;" maxlength="80">
-                    </fieldset>
-
-                    <fieldset>
-                        <legend><i class="fab fa-battle-net"></i></legend>
-                        <input type="text" name="url_title" id="publish_url_title" placeholder="URL Title Without Spaces" style="width: 100%;" maxlength="80">
                     </fieldset>
 
                     <fieldset>
@@ -96,7 +93,10 @@
                         <input type="text" name="facebook_sharing_link" id="publish_facebook_sharing_link" placeholder="Facebook Sharing Link" style="width: 100%;" maxlength="1023">
                     </fieldset>
 
-                    <!-- <input type="button" value="Publish" data-toggle="modal" class="btn btn-primary" data-target="#confirmation-box"> -->
+                    <br>
+                    <a href="../discard-article/">
+                    <button type="button" class="btn btn-sm" style="background-color: #F32013; color: white;">Discard</button>
+                    </a>
 
                     <!-- Modal Starts -->
                     <div class="modal fade" id="confirmation-box" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -112,6 +112,7 @@
                                     <p class="text-primary">Are you sure you want to Publish?</p>
                                     <p class="text-secondary">Article Link will be live at:</p>
                                     <span class="align-left">
+                                        E
                                         <p class="bg-light text-dark" id="link-to-copy">Link not available</p>
                                     </span>
                                     <span class="align-right copy-link" onclick="copyLinkToClipboard()" id="copy-Link">Copy Link <i class="far fa-clone"></i></span>
@@ -238,7 +239,6 @@
     <script>
 
         $("#sender").click(function () {
-                    var filename = $('#file-name').val();
                     var codeContent = $('#codeContent').val();
                     var publish_title = $('#publish_title').val();
                     var publish_url_title = $('#publish_url_title').val();
@@ -252,10 +252,8 @@
                     $.ajax({
                                 url: '{% url 'get_response' %}',
                                 data: {
-                                            'filename': filename,
                                             'codeContent': codeContent,
                                             'publish_title': publish_title,
-                                            'publish_url_title': publish_url_title,
                                             'publish_meta_keywords': publish_meta_keywords,
                                             'publish_meta_current_page_url': publish_meta_current_page_url,
                                             'publish_meta_description': publish_meta_description,

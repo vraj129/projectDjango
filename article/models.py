@@ -14,10 +14,10 @@ class Article(models.Model):
     url_title = models.CharField(max_length=80)  # Try not to exceed 70
 
     # Meta tags
-    meta_keywords = models.TextField()
+    meta_keywords = models.TextField(blank=True)
     meta_current_page_url = models.CharField(max_length=511, blank=True, null=True)
-    meta_description = models.CharField(max_length=165)  # Try not to exceed 155
-    meta_image_url = models.URLField(max_length=200)
+    meta_description = models.CharField(max_length=165, blank=True)  # Try not to exceed 155
+    meta_image_url = models.CharField(max_length=200, blank=True)
 
     # Images location
     images = models.TextField(blank=True, null=True)
