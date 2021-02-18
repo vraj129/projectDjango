@@ -45,12 +45,6 @@
                     <strong>PermaLink:</strong> articles/{{ request.session.url_title }}<br>
                     <strong>Filename:</strong> {{ request.session.file_name }}.html
                     <fieldset>
-                        <!-- <div class="input-group mb-3"> -->
-                        <!--     <input type="text" placeholder="File Name" class="" id="file-name" maxlength="80"> -->
-                        <!--     <div class="input-group-append"> -->
-                        <!--         <span class="input-group-text">.html</span> -->
-                        <!--     </div> -->
-                        <!-- </div> -->
                         <textarea id="codeContent" class="textarea" name="" cols="100%" rows="5" placeholder="Code" onkeypress="disable_publish_before_save()"></textarea>
                     </fieldset>
                     <p id="saving-status" class="text-muted"></p>
@@ -66,6 +60,8 @@
                         <legend><i class="fa fa-header" aria-hidden="true"></i></legend>
                         <input placeholder="Title" type="text" name="title" id="publish_title" style="width: 100%;" maxlength="80">
                     </fieldset>
+
+                    Featured Image: <input type="file" name="myImage" accept="image/*" /> <hr>
 
                     <fieldset>
                         <legend><i class="fas fa-tags"></i></legend>
@@ -93,9 +89,15 @@
                         <input type="text" name="facebook_sharing_link" id="publish_facebook_sharing_link" placeholder="Facebook Sharing Link" style="width: 100%;" maxlength="1023">
                     </fieldset>
 
+                    <fieldset>
+                        <legend><i class="fa fa-list-alt"></i></legend>
+                        <input type="text" name="categories" id="publish_categories" placeholder="Enter Categories" style="width: 100%;" maxlength="511">
+                        <div id="categories_list"></div>
+                    </fieldset>
+
                     <br>
                     <a href="../discard-article/">
-                    <button type="button" class="btn btn-sm" style="background-color: #F32013; color: white;">Discard</button>
+                        <button type="button" class="btn btn-sm" style="background-color: #F32013; color: white;">Discard</button>
                     </a>
 
                     <!-- Modal Starts -->
@@ -112,7 +114,6 @@
                                     <p class="text-primary">Are you sure you want to Publish?</p>
                                     <p class="text-secondary">Article Link will be live at:</p>
                                     <span class="align-left">
-                                        E
                                         <p class="bg-light text-dark" id="link-to-copy">Link not available</p>
                                     </span>
                                     <span class="align-right copy-link" onclick="copyLinkToClipboard()" id="copy-Link">Copy Link <i class="far fa-clone"></i></span>
@@ -279,10 +280,26 @@
     <script>
         $(document).ready(function(){
 
-                    $("#publish_url_title").keypress(function(){
-                                var url_title = $("#publish_url_title").val();
-                                console.log(url_title);
-                                $("#link-to-copy").text("https://www.{{ project_name }}.com/articles/" + url_title);
+                    $("#link-to-copy").text("https://www.{{ project_name }}.com/articles/" + "{{ request.session.url_title}}");
+
+                    $("#publish_categories").keyup(function(){
+                                var search_string = this.value;
+                                console.log(search_string)
+                                $.ajax({
+                                            url: '{% url 'get_categories' %}',
+                                            data: {
+                                                        'search_string': search_string,
+                                                    },
+                                            dataType: 'json',
+                                            success: function (response_data) {
+                                                        var output = "";
+                                                        for (x in response_data["response"]){
+                                                                    output += response_data["response"][x]["category_name"] + ", "
+                                                                }
+                                                        console.log(output);
+                                                        document.getElementById('categories_list').innerHTML = output;
+                                                    }
+                                        });
                             });
                 });
     </script>

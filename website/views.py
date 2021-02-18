@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.http import Http404
 from django.http import JsonResponse
-from article.models import Article
+from article.models import Article, Group
 from django.contrib import messages
-import re
 
 
 def base(request):
@@ -106,6 +105,23 @@ def logout(request):
     if 'url_to_go' in request.session:
         request.session.pop('url_to_go')
     return redirect('/')
+
+
+def answer_categories(request):
+    search_string = request.GET.get('search_string')
+    search_string = search_string.split(",")[-1].strip()
+
+    # If string is empty
+    if not search_string:
+        response_data = {'response': '  '}
+    else:
+        # i is for insensitive case search
+        queryset = Group.objects.filter(category_name__istartswith=search_string)
+        values_list = list(queryset.values())
+        print("vv", values_list)
+        response_data = {'response': values_list}
+        print("rd", response_data["response"][0]["category_name"])
+    return JsonResponse(response_data)
 
 
 def answer_me(request):

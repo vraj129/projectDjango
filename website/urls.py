@@ -22,4 +22,5 @@ urlpatterns = [
     # Recieves Responses so that we can send back content
     # without refreshing page
     path("get_response/$", views.answer_me, name='get_response'),
+    path("get_categories/$", views.answer_categories, name='get_categories'),
 ]
