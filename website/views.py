@@ -4,6 +4,7 @@ from django.http import Http404
 from django.http import JsonResponse
 from article.models import Article, Group
 from django.contrib import messages
+import re
 
 
 def base(request):
@@ -26,8 +27,12 @@ def new(request):
         session_for_url_title = False
         session_for_filename = False
 
-        url_title = request.POST["url_title"]
-        file_name = request.POST["file_name"]
+        # If you remove lower() from here,
+        # please remove it from article/views.py - def dynamic_article: also
+
+        # Converting to lower so that unique user can search in any case in url
+        url_title = request.POST["url_title"].lower()
+        file_name = request.POST["file_name"].lower()
 
         try:
             Article.objects.get(url_title=url_title)
@@ -121,6 +126,52 @@ def answer_categories(request):
         print("vv", values_list)
         response_data = {'response': values_list}
         print("rd", response_data["response"][0]["category_name"])
+    return JsonResponse(response_data)
+
+
+def confirm_publish(request):
+    filename = request.GET.get('filename')
+    codeContent = request.GET.get('codeContent')
+    publish_title = request.GET.get('publish_title')
+    publish_meta_keywords = request.GET.get('publish_meta_keywords')
+    publish_meta_current_page_url = request.GET.get('publish_meta_current_page_url')
+    publish_meta_description = request.GET.get('publish_meta_description')
+    publish_meta_image_url = request.GET.get('publish_meta_image_url')
+    publish_facebook_sharing_link = request.GET.get('publish_facebook_sharing_link')
+
+    if 'file_name' in request.session:
+        filename = request.session['file_name']
+    if 'url_title' in request.session:
+        publish_url_title = request.session['url_title']
+
+    if not publish_title:
+        response_data = {'response': 'Please Enter Title and then save'}
+    elif not publish_url_title:
+        response_data = {'response': 'Please Enter Url Title'}
+    elif ' ' in publish_url_title:
+        response_data = {'response': 'Please Enter Url Title without Spaces'}
+    else:
+        file_location = "templates/articles/" + filename + ".html"
+        with open(file_location, 'w') as f:
+            f.write(codeContent)
+        try:
+            Article.objects.filter(url_title=publish_url_title).update(
+                file_location=file_location,
+                title=publish_title,
+                meta_keywords=publish_meta_keywords,
+                meta_current_page_url=publish_meta_current_page_url,
+                meta_description=publish_meta_description,
+                meta_image_url=publish_meta_image_url,
+                facebook_sharing_link=publish_facebook_sharing_link,
+
+                publish_status=True
+            )
+            print("Published")
+            response_data = {'response': 'Published Successfully'}
+        except Exception as e:
+            print(e)
+            print("-----Some issue--------")
+            response_data = {'response': 'Unknown Error Occured'}
     return JsonResponse(response_data)
 
 

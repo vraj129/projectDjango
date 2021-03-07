@@ -59,10 +59,16 @@
     </head>
     <body>
 
+        {% block facebook_sharing_link %}
+        <!-- Facebook Sharing -->
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0" nonce="DeeWRCCl"></script>
+        {% endblock %}
+
         {% block sidebar %}
             <div id="colorlib-page">
                 <!-- `colorlib-nav-toggle` <- class name -->
-            <!-- To change color of 3 lines, goto `style.css`. Line no.8375-8422. Change color -->
+                <!-- To change color of 3 lines, goto `style.css`. Line no.8375-8422. Change color -->
                 <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
 
                 <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="overflow: auto;">

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import sys
 from pymongo import MongoClient
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -24,7 +25,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pjn@(eh(c3h)sp$ivp9l_9j^_lj8*!@507i*b8pb+xkapgs9c='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (sys.argv[1] == 'runserver')
+
+if DEBUG is False:
+    PROJECT_NAME = 'Djaley'
+else:
+    PROJECT_NAME = '127.0.0.1:8000'
 
 ALLOWED_HOSTS = []
 
@@ -179,9 +185,11 @@ CLIENT = MongoClient("mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mo
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-PROJECT_NAME = 'Djaley'
 DATABASE_NAME = 'tuc'
-
 
 DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '226075552951-hhfiilf9ogq6dkug05j7tkej5bl0kd4g.apps.googleusercontent.com'
 DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 'PRegkN6skeTe5k1LowOWVQ6_'
+
+
+# Template tags and filters - a | title
+# TIME_ZONE = 'Asia/Kolkata'

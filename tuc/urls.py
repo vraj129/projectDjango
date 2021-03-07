@@ -19,12 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # LOGIN_REDIRECT_URL is defined in settings.py
     path('social_login/', include('social_login.urls')),
     path('', include('website.urls')),
-    # path('', TemplateView.as_view(template_name="social_login/index.html")),
     path('user/', include('users.urls')),
     path('article/', include('article.urls')),
     path('accounts/', include('allauth.urls')),
@@ -32,4 +32,5 @@ urlpatterns = [
 ]
 
 # Media Visibilty in Website
-urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = urlpatterns + static(settings.MEDIA_URL,
+                                   document_root=settings.MEDIA_ROOT)

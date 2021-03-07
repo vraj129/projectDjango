@@ -4,14 +4,23 @@
 {% load socialaccount %}
 
 {% block meta %}
-    <meta name="description" content='{{ this_article.meta_description }}'>
+    <meta name="description" content="we{{ this_article.meta_description }}">
     <meta name="keywords" content="{{ this_article.meta_keywords }}">
 
     <meta property="og:title" content="{{ this_article.title }}" />
-    <meta property="og:url" content="{{ this_article.meta_current_page_url }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
 
     <meta property="og:description" content="{{ this_article.meta_description }}">
     <meta property="og:image" content="{{ this_article.meta_image_url }}">
+    <style>
+.aj-img{
+    max-height:200px;
+}
+.superuser-tasks a{
+    padding: 0 5px;
+    float: right;
+}
+    </style>
 {% endblock %}
 
 {% block third_div_after_section_starts %}
@@ -23,12 +32,54 @@
         {% if user.is_authenticated %}
             <div class="row pt-md-4">
                 <div class="container">
-                    Jai Swaminarayan
-                    <br>{{ this_article.file_location }}
-                    <br>{{ this_article.title }}
-                    <br>{{ this_article.views_count }}
-                    <br>{{ this_article.date_modified }}
-                    <br>{{ this_article.date_created }}
+                    {% if this_article.publish_status %}
+                        <!-- Jai Swaminarayan -->
+                        <!-- <br>{{ this_article.file_location }} -->
+                        <!-- <br>{{ this_article.title }} -->
+                        <!-- <br>{{ this_article.views_count }} -->
+                        <!-- <br>{{ this_article.date_modified }} -->
+                        <!-- <br>{{ this_article.date_created }} -->
+
+                        {% if user.is_superuser %}
+                            <div class="superuser-tasks">
+                                <a href="#"><button class="btn btn-sm btn-warning">Archieve</button></a>
+                                <a href="#"><button class="btn btn-sm btn-info">Edit</button></a>
+                            </div>
+                        {% endif %}
+                        <h1 class="mb-3"> {{ this_article.title |title }}</h1>
+
+                        <!-- File Content -->
+                        <!-- This built in tag named "safe" is harmful. Use only if u trust the content -->
+                        <div id="fileContent"> {{ file_content|safe }} </div>
+
+                        <div class="social-share-links">
+                            {{ share_string }}
+                            <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_string }}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        </div>
+
+                        <br><br>
+                        <div style="float: left; font-size: 12px;">
+                            <strong><i class="fas fa-eye"></i></strong> {{ this_article.views_count }} <br>
+
+                            <!-- <strong><i class="far fa-calendar-alt"></i></strong> {{ this_article.date_modified | date:"M d, Y - H:i"}} (UTC+00:00) <br> -->
+
+                            <i class="far fa-edit"></i> {{ this_article.date_modified | timesince}} ago (UTC+00:00) <br>
+                            <i class="far fa-calendar-plus"></i> {{ this_article.date_created | timesince}} ago (UTC+00:00) <br>
+                            <!-- <strong>Modified:</strong> {{ this_article.date_modified | date:"M d, Y - H:i"}}<br> -->
+                            <!-- <strong>Created:</strong> {{ this_article.date_created |date:"M d, Y - H:i" }}<br> -->
+                        </div>
+
+                        <div style="float: right;"></div>
+                        <div style="clear: both;"></div>
+                    {% else %}
+                        <center>
+                            <h4>No such Article Published</h4>
+                            <br>
+                            <img src="/static/images/errors/article-not-found-min.jpg" alt="" class="img aj-img img-thumbnail">
+                            <br>
+                            <h2><a href="/">Go to Home Page</a></h2>
+                        </center>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
@@ -39,4 +90,12 @@
 
     {% block third_div_after_section_ends %}
         </div>
+    {% endblock %}
+
+    {% block scripts %}
+        <script>
+            $(document).ready(function() {
+                            console.log("HI")
+                        });
+        </script>
     {% endblock %}
