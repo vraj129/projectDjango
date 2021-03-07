@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path('<str:url_title>', views.dynamic_article, name='Default Page'),
+    path('<str:url_title>/', views.dynamic_article, name='Default Page'),
 ]

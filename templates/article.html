@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load socialaccount %}
+{% load custom_filters %}
 
 {% block meta %}
     <meta name="description" content="we{{ this_article.meta_description }}">
@@ -19,6 +20,13 @@
 .superuser-tasks a{
     padding: 0 5px;
     float: right;
+}
+.social-share-links{
+    display: flex;
+    align-items: center;
+}
+.social-share-button{
+    padding: 10px 10px;
 }
     </style>
 {% endblock %}
@@ -52,21 +60,44 @@
                         <!-- This built in tag named "safe" is harmful. Use only if u trust the content -->
                         <div id="fileContent"> {{ file_content|safe }} </div>
 
-                        <div class="social-share-links">
-                            {{ share_string }}
-                            <div class="fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_string }}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                        <div class="social-share-links row">
+                            <div class="social-share-button fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="large">
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_string }}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share To Facebook</a>
+                            </div>
+                            <div class="social-share-button">
+                                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ share_string }}" onclick="return !window.open(this.href, 'Twitter', 'width=500,height=500')" data-size="large">
+                                <button class="btn" style="background-color: #00acee; color:white;"><i class="fab fa-twitter"></i> Tweet
+                                </button></a>
+                            </div>
+                            <div class="social-share-button">
+                                <!-- share_link will not work in localhost in Linkedin -->
+                                <!-- try to write facebook.com instead of share_link and it will work -->
+                                <a class="" href="https://www.linkedin.com/shareArticle?mini=true&url={{ share_link }}" onclick="return !window.open(this.href, 'Linkedin', 'width=500,height=500')">
+                                <button class="btn" style="background-color: #2867b2; color:white;"><i class="fab fa-linkedin"></i> Share to Linkedin
+                                </button></a>
+                            </div>
+
+                            <div class="social-share-button">
+                                <a class="" href="whatsapp://send?text={{ share_string }}" data-action="share/whatsapp/share">
+                                <button class="btn" style="background-color: #4fce5d; color:white;"><i class="fab fa-whatsapp"></i> Share to Whatsapp
+                                </button></a>
+                                <br>
+
+                                Mobile detect https://pypi.org/project/django-user-agents/
+                                https://pypi.org/project/django-detect/
+                                https://stackoverflow.com/questions/42273319/detect-mobile-devices-with-django-and-python-3
+                                Embed Commenting<br>
+                                Show more posts here. No one is going back
+                            </div>
                         </div>
 
                         <br><br>
                         <div style="float: left; font-size: 12px;">
-                            <strong><i class="fas fa-eye"></i></strong> {{ this_article.views_count }} <br>
-
-                            <!-- <strong><i class="far fa-calendar-alt"></i></strong> {{ this_article.date_modified | date:"M d, Y - H:i"}} (UTC+00:00) <br> -->
-
-                            <i class="far fa-edit"></i> {{ this_article.date_modified | timesince}} ago (UTC+00:00) <br>
-                            <i class="far fa-calendar-plus"></i> {{ this_article.date_created | timesince}} ago (UTC+00:00) <br>
-                            <!-- <strong>Modified:</strong> {{ this_article.date_modified | date:"M d, Y - H:i"}}<br> -->
-                            <!-- <strong>Created:</strong> {{ this_article.date_created |date:"M d, Y - H:i" }}<br> -->
+                            <!-- The source for timesince is located under django/utils/timesince.py and thus some code is edited there like limiting django timesince filter to 7 days -->
+                            <!-- Timesince wont to be applied to posts older than 7 days -->
+                            <strong><i class="fas fa-eye"></i></strong> {{ this_article.views_count }} views<br>
+                            <i class="far fa-edit"></i> {{ this_article.date_modified | timesince }} <br>
+                            <i class="far fa-calendar-plus"></i> {{ this_article.date_created | timesince }} <br>
                         </div>
 
                         <div style="float: right;"></div>
@@ -82,9 +113,9 @@
                     {% endif %}
                 </div>
             </div>
-        {% else %}
-            {% include 'signin.html' %}
-        {% endif %}
+            {% else %}
+                {% include 'signin.html' %}
+            {% endif %}
         <!-- END -->
     {% endblock %}
 

@@ -16,7 +16,8 @@ def dynamic_article(request, url_title):
     try:
         # If you remove lower() from here,
         # please remove it from website/views.py - def new: also
-        article_data = Article.objects.get(url_title=url_title.lower())
+        url_title = url_title.lower()
+        article_data = Article.objects.get(url_title=url_title)
     except Article.DoesNotExist:
         raise Http404("No Such Article found")
 
@@ -29,7 +30,9 @@ def dynamic_article(request, url_title):
 
     # Url quote_plus
     aaa = request.build_absolute_uri()
-    share_string = urllib.parse.quote(aaa, safe='')
+    aaa2 = "Check out this awesome site. " + aaa
+    share_string = urllib.parse.quote(aaa2, safe='')
+    share_link = urllib.parse.quote(aaa, safe='')
     # Ex: http://127.0.0.1:8000/article/demo will be converted to
     # http%3A%2F%2F127.0.0.1%3A8000%2Farticle%2Fdemo
 
@@ -38,6 +41,7 @@ def dynamic_article(request, url_title):
         "this_article": article_data,
         "file_content": file_content,
         "share_string": share_string,
+        "share_link": share_link,
     }
 
     return render(request, 'article.html', article_data)
