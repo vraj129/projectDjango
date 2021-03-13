@@ -38,6 +38,9 @@ class Article(models.Model):
     # Publish Status
     publish_status = models.BooleanField(default=False)
 
+    # Publish Status
+    allow_comments = models.BooleanField(default=True)
+
     # Categories
     categories = models.CharField(max_length=511, blank=True)
 

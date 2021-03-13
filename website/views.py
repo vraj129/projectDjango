@@ -17,7 +17,17 @@ def home(request):
     return render(request, 'home.html')
 
 
-def new(request):
+def new2(request):
+    print(request)
+    a = other_func(request)
+    return a
+
+
+def other_func(request):
+    return render(request, 'edit.html')
+
+
+def new(request, slug=None):
     if not request.user.is_superuser:
         # raise Http404("Not a superuser")
         raise Http404
@@ -159,10 +169,7 @@ def confirm_publish(request):
                 file_location=file_location,
                 title=publish_title,
                 meta_keywords=publish_meta_keywords,
-                meta_current_page_url=publish_meta_current_page_url,
                 meta_description=publish_meta_description,
-                meta_image_url=publish_meta_image_url,
-                facebook_sharing_link=publish_facebook_sharing_link,
 
                 publish_status=True
             )
@@ -180,10 +187,7 @@ def answer_me(request):
     codeContent = request.GET.get('codeContent')
     publish_title = request.GET.get('publish_title')
     publish_meta_keywords = request.GET.get('publish_meta_keywords')
-    publish_meta_current_page_url = request.GET.get('publish_meta_current_page_url')
     publish_meta_description = request.GET.get('publish_meta_description')
-    publish_meta_image_url = request.GET.get('publish_meta_image_url')
-    publish_facebook_sharing_link = request.GET.get('publish_facebook_sharing_link')
 
     if 'file_name' in request.session:
         filename = request.session['file_name']
@@ -205,10 +209,7 @@ def answer_me(request):
                 file_location=file_location,
                 title=publish_title,
                 meta_keywords=publish_meta_keywords,
-                meta_current_page_url=publish_meta_current_page_url,
                 meta_description=publish_meta_description,
-                meta_image_url=publish_meta_image_url,
-                facebook_sharing_link=publish_facebook_sharing_link,
             )
             response_data = {'response': f'Saved: {filename}.html'}
         except Exception as e:

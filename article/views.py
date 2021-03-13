@@ -11,6 +11,33 @@ import urllib.parse
 
 # Create your views here.
 def dynamic_article(request, url_title):
+    # Mobile device detection Starts
+    # Let's assume that the visitor uses an iPhone...
+    request.user_agent.is_mobile  # returns True
+    request.user_agent.is_tablet  # returns False
+    request.user_agent.is_touch_capable  # returns True
+    request.user_agent.is_pc  # returns False
+    request.user_agent.is_bot  # returns False
+
+    # Accessing user agent's browser attributes
+    request.user_agent.browser  # returns Browser(
+    # family=u'Mobile Safari', version=(5, 1), version_string='5.1')
+    request.user_agent.browser.family  # returns 'Mobile Safari'
+    request.user_agent.browser.version  # returns (5, 1)
+    request.user_agent.browser.version_string   # returns '5.1'
+
+    # Operating System properties
+    request.user_agent.os  # returns OperatingSystem(
+    # family=u'iOS', version=(5, 1), version_string='5.1')
+    request.user_agent.os.family  # returns 'iOS'
+    request.user_agent.os.version  # returns (5, 1)
+    request.user_agent.os.version_string  # returns '5.1'
+
+    # Device properties
+    request.user_agent.device  # returns Device(family='iPhone')
+    request.user_agent.device.family  # returns 'iPhone'
+    # Mobile device detection Ends
+
     request.session['url_to_go'] = request.path
 
     try:
@@ -29,14 +56,15 @@ def dynamic_article(request, url_title):
     file_content = file_.read()
 
     # Url quote_plus
-    aaa = request.build_absolute_uri()
-    aaa2 = "Check out this awesome site. " + aaa
-    share_string = urllib.parse.quote(aaa2, safe='')
-    share_link = urllib.parse.quote(aaa, safe='')
+    absolute_url = request.build_absolute_uri()
+
+    absolute_url_string = "Check out this awesome site. " + absolute_url
+    share_string = urllib.parse.quote(absolute_url_string, safe='')
+
     # Ex: http://127.0.0.1:8000/article/demo will be converted to
     # http%3A%2F%2F127.0.0.1%3A8000%2Farticle%2Fdemo
+    share_link = urllib.parse.quote(absolute_url, safe='')
 
-    # share_string = quote_plus()
     article_data = {
         "this_article": article_data,
         "file_content": file_content,

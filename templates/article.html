@@ -3,6 +3,7 @@
 {% load static %}
 {% load socialaccount %}
 {% load custom_filters %}
+{% load user_agents %}
 
 {% block meta %}
     <meta name="description" content="we{{ this_article.meta_description }}">
@@ -13,6 +14,9 @@
 
     <meta property="og:description" content="{{ this_article.meta_description }}">
     <meta property="og:image" content="{{ this_article.meta_image_url }}">
+
+    <!-- Facebook Comments Moderation -->
+    <meta property="fb:app_id" content="812203096174919" />
     <style>
 .aj-img{
     max-height:200px;
@@ -40,7 +44,14 @@
         {% if user.is_authenticated %}
             <div class="row pt-md-4">
                 <div class="container">
-                    {% if this_article.publish_status %}
+                    {% if this_article.publish_status or user.is_superuser %}
+                        {% if not this_article.publish_status %}
+                            <div class="alert alert-warning">
+                                <strong>Warning!</strong> This post is either Archieved or not yet published.
+                                <p>(Visible to superuser only)</p>
+                            </div>
+                        {% endif %}
+
                         <!-- Jai Swaminarayan -->
                         <!-- <br>{{ this_article.file_location }} -->
                         <!-- <br>{{ this_article.title }} -->
@@ -50,8 +61,12 @@
 
                         {% if user.is_superuser %}
                             <div class="superuser-tasks">
-                                <a href="#"><button class="btn btn-sm btn-warning">Archieve</button></a>
-                                <a href="#"><button class="btn btn-sm btn-info">Edit</button></a>
+                                {% if this_article.publish_status %}
+                                    <a href="#"><button class="btn btn-sm btn-warning">Archieve</button></a>
+                                {% else %}
+                                    <a href="#"><button class="btn btn-sm btn-warning">Publish</button></a>
+                                {% endif %}
+                                <a href="/edit/{{ this_article.url_title }}"><button class="btn btn-sm btn-info">Edit</button></a>
                             </div>
                         {% endif %}
                         <h1 class="mb-3"> {{ this_article.title |title }}</h1>
@@ -66,29 +81,53 @@
                             </div>
                             <div class="social-share-button">
                                 <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ share_string }}" onclick="return !window.open(this.href, 'Twitter', 'width=500,height=500')" data-size="large">
-                                <button class="btn" style="background-color: #00acee; color:white;"><i class="fab fa-twitter"></i> Tweet
-                                </button></a>
+                                    <button class="btn" style="background-color: #00acee; color:white;"><i class="fab fa-twitter"></i> Tweet
+                                    </button></a>
                             </div>
                             <div class="social-share-button">
                                 <!-- share_link will not work in localhost in Linkedin -->
                                 <!-- try to write facebook.com instead of share_link and it will work -->
                                 <a class="" href="https://www.linkedin.com/shareArticle?mini=true&url={{ share_link }}" onclick="return !window.open(this.href, 'Linkedin', 'width=500,height=500')">
-                                <button class="btn" style="background-color: #2867b2; color:white;"><i class="fab fa-linkedin"></i> Share to Linkedin
-                                </button></a>
+                                    <button class="btn" style="background-color: #2867b2; color:white;"><i class="fab fa-linkedin"></i> Share to Linkedin
+                                    </button></a>
                             </div>
 
-                            <div class="social-share-button">
-                                <a class="" href="whatsapp://send?text={{ share_string }}" data-action="share/whatsapp/share">
-                                <button class="btn" style="background-color: #4fce5d; color:white;"><i class="fab fa-whatsapp"></i> Share to Whatsapp
-                                </button></a>
-                                <br>
+                            <!-- https://pypi.org/project/django-user-agents/ -->
+                            {% if request|is_mobile %}
+                                <div class="social-share-button">
+                                    <a class="" href="whatsapp://send?text={{ share_string }}" data-action="share/whatsapp/share">
+                                        <button class="btn" style="background-color: #4fce5d; color:white;"><i class="fab fa-whatsapp"></i> Share to Whatsapp
+                                        </button></a>
+                                        <br>
 
-                                Mobile detect https://pypi.org/project/django-user-agents/
-                                https://pypi.org/project/django-detect/
-                                https://stackoverflow.com/questions/42273319/detect-mobile-devices-with-django-and-python-3
-                                Embed Commenting<br>
-                                Show more posts here. No one is going back
-                            </div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- To enable Facebook Moderator Commenting,
+                            you need to from development mode to live
+                            To enable Live mode,
+                            1. https://developers.facebook.com/apps
+                            2. Set up (privacy policy url && (data deletion policy url || data deletion callback url))
+
+                            Screenshots have been uploaded for future reference in static/facebook/ folder
+                            Link to Refer:
+
+                            https://developers.facebook.com/docs/plugins/comments/
+
+                        -->
+                        {% if this_article.allow_comments %}
+                            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-width="" data-numposts="10" data-order-by="social" colorscheme="dark"></div>
+                        {% else %}
+                            <p class="text-danger">
+                            Comments are turned off.
+                            </p>
+                        {% endif %}
+
+                        <div>
+                            Edit Article on Clicking edit
+                            Featured Image <br>
+                            Show more posts here. No one is going back<br>
                         </div>
 
                         <br><br>
@@ -113,9 +152,9 @@
                     {% endif %}
                 </div>
             </div>
-            {% else %}
-                {% include 'signin.html' %}
-            {% endif %}
+        {% else %}
+            {% include 'signin.html' %}
+        {% endif %}
         <!-- END -->
     {% endblock %}
 
