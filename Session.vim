@@ -11,15 +11,8 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit website/views.py
+edit templates/article.html
 set splitbelow splitright
-wincmd _ | wincmd |
-split
-wincmd _ | wincmd |
-split
-2wincmd k
-wincmd w
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
@@ -27,7 +20,6 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-wincmd =
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -38,80 +30,27 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 23 - ((4 * winheight(0) + 5) / 11)
+let s:l = 124 - ((14 * winheight(0) + 17) / 34)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
-normal! 012|
-wincmd w
-argglobal
-if bufexists("website/urls.py") | buffer website/urls.py | else | edit website/urls.py | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 14 - ((6 * winheight(0) + 5) / 11)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-14
-normal! 027|
-wincmd w
-argglobal
-if bufexists("templates/article.html") | buffer templates/article.html | else | edit templates/article.html | endif
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 69 - ((5 * winheight(0) + 6) / 12)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-69
-normal! 041|
-wincmd w
-wincmd =
+124
+normal! 033|
 tabnext 1
-badd +24 website/views.py
-badd +72 templates/article.html
-badd +47 users/views.py
-badd +13 article/views.py
-badd +6 article/urls.py
-badd +12 templates/signin.html
-badd +10 social_login/views.py
-badd +2 social_login/urls.py
-badd +36 tuc/urls.py
-badd +25 templates/index.html
-badd +6 users/urls.py
-badd +1 social_login/apps.py
-badd +3 social_login/models.py
-badd +1 social_login/tests.py
-badd +35 tuc/settings.py
-badd +1 templates/profile_picture.html
-badd +1 templates/base.html
-badd +1 users/tests.py
-badd +1 users/apps.py
-badd +1 users/admin.py
-badd +4 website/context_processors.py
-badd +42 article/models.py
-badd +1 article/templatetags/__init__.py
-badd +10 ~/Documents/Git/tuc-django/tuc/article/templatetags/custom_filters.py
-badd +74 ~/Documents/Git/tuc-django/tucVirtualEnv/lib/python3.8/site-packages/django/utils/timesince.py
-badd +1 templates/articles/aj.html
-badd +9 a.html
-badd +17 website/urls.py
-badd +1 templates/edit.html
+badd +0 users/views.py
+badd +34 article/admin.py
+badd +58 article/models.py
+badd +14 tuc/wsgi.py
+badd +44 tuc/urls.py
+badd +118 website/views.py
+badd +42 tuc/settings.py
+badd +5 social_login/urls.py
+badd +3 tuc/decorators.py
+badd +0 article/views.py
+badd +28 tuc/admin.py
+badd +3 tuc/apps.py
+badd +99 templates/base.html
+badd +0 templates/article.html
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif

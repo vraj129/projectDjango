@@ -21,7 +21,11 @@ class Article(models.Model):
     title = models.CharField(max_length=80)  # Try not to exceed 70
 
     # url
-    url_title = models.CharField(max_length=80)  # Try not to exceed 70
+    url_title = models.CharField(max_length=80, unique=True)  # Try not to exceed 70
+
+    # indexing_count
+    # index_increment_in_last_5_days
+    # index bahut jaldi change hora h, means voh trending me h
 
     # Featured Image
     featured_image = models.ImageField(upload_to='article_pictures',
@@ -53,6 +57,18 @@ class Article(models.Model):
     # Date Created
     date_created = models.DateTimeField(auto_now_add=now)
 
-    def __str__(self):
-        return (str(self.id) + " " +
-                str(self.url_title) + " (" + str(self.meta_description) + ")")
+    # def __str__(self):
+    #     return (str(self.id) + " " +
+    #             str(self.url_title) + " (" + str(self.meta_description) + ")")
+
+
+# this_table_id(auto generated)
+
+# article_id
+# user_id
+# read_status
+# saved_status
+# engagement_time
+
+
+# trending_articles

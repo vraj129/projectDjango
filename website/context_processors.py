@@ -17,6 +17,7 @@ def basic_data(request):
                 'project_name': settings.PROJECT_NAME,
                 'profile_picture': "/" + extra_user_detail.image_url,
                 'locale': extra_user_detail.locale,
+                'verified_profile': extra_user_detail.verified_profile,
             }
         else:
             data = {

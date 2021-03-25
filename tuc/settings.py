@@ -26,6 +26,7 @@ SECRET_KEY = 'pjn@(eh(c3h)sp$ivp9l_9j^_lj8*!@507i*b8pb+xkapgs9c='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (sys.argv[1] == 'runserver')
+DEBUG = True
 
 if DEBUG is False:
     PROJECT_NAME = 'Djaley'
@@ -38,7 +39,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'tuc.apps.MyAdminConfig',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -185,7 +187,7 @@ AUTHENTICATION_BACKENDS = (
 # Google login:
 SITE_ID = 2
 LOGIN_REDIRECT_URL = '/user/profile/picture/'
-
+LOGOUT_REDIRECT_URL = '/'
 
 # Finally, enable email scope to receive user’s email addresses after
 # successful social login:
@@ -208,8 +210,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DATABASE_NAME = 'tuc'
 
-DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '226075552951-hhfiilf9ogq6dkug05j7tkej5bl0kd4g.apps.googleusercontent.com'
-DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 'PRegkN6skeTe5k1LowOWVQ6_'
+# DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '226075552951-hhfiilf9ogq6dkug05j7tkej5bl0kd4g.apps.googleusercontent.com'
+# DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 'PRegkN6skeTe5k1LowOWVQ6_'
 
 
 # Template tags and filters - a | title

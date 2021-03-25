@@ -1,283 +1,30 @@
+{% extends 'base.html' %}
+
 {% load static %}
 {% load socialaccount %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- Meta tags -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {% block meta %}
-            <meta name="description" content='Welcome to {{ project_name }}'>
-            <meta name="keywords" content="{{ project_name }}, {{ project_name }}">
+{% block content %}
+    <form action="/new/" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">articles/</span>
+            </div>
+            <input type="text" class="form-control" placeholder="url title" name="url_title">
+        </div>
 
-            <meta property="og:title" content="{{ project_name }}" />
-            <meta property="og:url" content="https url of current page" />
-
-            <meta property="og:description" content="Descriptiotn">
-            <meta property="og:image" content="https image url">
-        {% endblock %} 
-        <!-- Title -->
-        {% block title %} <title>{{ project_name }}</title> {% endblock %}
-
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="{% static 'images/logo/logo-no-text.png' %}">
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
-
-        <!-- Css -->
-        <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
-        <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-        <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
-
-        <link rel="stylesheet" href="{% static 'css/mycss.css' %}">
-
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all">
-
-
-        {% block head_content %}
-        {% endblock %}
-
-
-    </head>
-    <body>
-
-        {% block sidebar %}
-            <div id="colorlib-page">
-                <!-- `colorlib-nav-toggle` <- class name -->
-            <!-- To change color of 3 lines, goto `style.css`. Line no.8375-8422. Change color -->
-                <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-
-                <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="overflow: auto;">
-                    <img src="{% static 'images/logo/logo-no-text.png' %}" height="auto" width="50" style="margin-top: -20px;">
-                    <nav id="colorlib-main-menu" role="navigation">
-                        <ul>
-                            <!-- <li class="colorlib-active"><a href="index.php">Home</a></li> -->
-                            <li class="active-home">
-                                <a href="/">
-                                    <i class="fa fa-home" aria-hidden="true"></i> Home
-                                </a>
-                            </li>
-                            <li class="active-explore">
-                                <a href="/explore">
-                                    <i class="fas fa-hashtag"></i> Explore
-                                </a>
-                            </li>
-                            <li class="active-latest">
-                                <a href="/latest">
-                                    <i class="fas fa-location-arrow"></i> Latest 
-                                </a>
-                            </li>
-                            <li class="active-trending">
-                                <a href="/trending">
-                                    <i class="fab fa-hotjar"></i> Trending
-                                </a>
-                            </li>
-
-                            {% if user.is_authenticated %}
-                                {% if request.user.is_superuser %}
-                                    <hr>
-                                    <li class="active-new">
-                                        <a href="/new">
-                                            <i class="fa fa-plus-circle" aria-hidden="true"></i> New
-                                        </a>
-                                    </li>
-
-                                {% endif %}
-                                <hr> <!-- HR -->
-                                <li class="active-saved">
-                                    <a href="/saved">
-                                        <i class="fas fa-bookmark"></i> Saved
-                                    </a>
-                                </li>
-                                <li class="active-notifications">
-                                    <a href="/notifications">
-                                        <i class="fas fa-bell"></i> Notifications
-                                        <span class="badge badge-danger">4</span>
-                                    </a>
-                                </li>
-
-                                <hr> <!-- HR -->
-                                <li class="active-profile">
-                                    <a href="/profile">
-                                        <i class="fas fa-user"></i> Profile
-                                    </a>
-                                </li>
-                                <li class="active-settings">
-                                    <a href="/settings">
-                                        <i class="fas fa-cog"></i> Settings
-                                    </a>
-                                </li>
-
-                                <li class="active-profile profile_name">
-                                    <a href="#" title="{{ user.first_name}} {{ user.last_name }}" data-placement="top" data-toggle="popover" data-html="true" data-content="<a class='logout-text' href='/logout'>Logout of @{{ user.username }} </a>">
-                                        <img src="{{ profile_picture }}" alt="Profile Picture" class="profile_picture">{{ user.first_name }} {{ user.last_name }}
-                                    </a>
-                                </li>
-                            {% endif %}
-
-                            <hr> <!-- HR -->
-                            <li class="active-about">
-                                <a href="/about">
-                                    <i class="fas fa-info-circle"></i> About
-                                </a>
-                            </li>
-                            <li class="active-contact">
-                                <a href="/contact">
-                                    <i class="fas fa-comment-alt"></i> Contact
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <div class="colorlib-footer">
-                        <!-- <img src="{% static '/images/logo/logo.png' %}" width="130" height="130"> -->
-                        <p class="pfooter">
-                        Made by <a href="https://colorlib.com" target="_blank">Colorlib </a> and <a href="https://instagram.com/theunitedcodes" target="_blank"> {{ project_name }}</a>
-                        </p>
-                    </div>
-                </aside>
-            {% endblock %}
-
-            <div id="colorlib-main">
-                {% block section_and_div_start %}
-                    <section class="ftco-section ftco-no-pt ftco-no-pb">
-                        <div class="container">
-                            <div class="row d-flex">
-                            {% endblock %}
-
-                            {% block third_div_after_section_starts %}
-                                <div class="col-xl-8 py-5 px-md-5">
-                                {% endblock %}
-
-                                {% block project_name_at_top %}
-                                    <h3 style="color: #1eafed; font-family: Lora, Arial;" class="text-center">{{ project_name }}</h3>
-                                {% endblock %}
-
-
-                                {% block content %}
-                                    <form action="/new/" method="post">
-                                        {% csrf_token %}
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">articles/</span>
-                                            </div>
-                                            <input type="text" class="form-control" placeholder="url title" name="url_title">
-                                        </div>
-
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="file Name" name="file_name">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">.html</span>
-                                            </div>
-                                        </div>
-                                        {% for m in messages %}
-                                            <h4 style="color: red;">{{m}}</h4>
-                                        {% endfor %}
-                                        <div>
-                                            <input type="submit" value="Go" class="btn btn-primary">
-                                        </div>
-                                    </form>
-                                {% endblock %}
-
-                                {% block third_div_after_section_ends %}
-                                    </div>
-                                {% endblock %}
-
-                                {% block right_side %}
-                                    <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
-                                        <div class="sidebar-box ftco-animate">
-                                            <h3 class="sidebar-heading">Categories</h3>
-                                            <ul class="categories">
-                                                <li><a href="#">Hacking <span>(1)</span></a></li>
-                                                <li><a href="#">Technology <span>(1)</span></a></li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="sidebar-box ftco-animate">
-                                            <h3 class="sidebar-heading">Popular Articles</h3>
-                                            <div class="block-21 mb-4 d-flex">
-                                                <a class="blog-img mr-4" style="background-image: url({% static 'images/articles/keylogger/1-keylogger.jpg' %});"></a>
-                                                <div class="text">
-                                                    <h3 class="heading"><a href="../articles/1-keylogger.php">Tricks to steal password </a></h3>
-                                                    <div class="meta">
-                                                        <div><span class="icon-calendar"></span> Mar 23, 2020</div>
-                                                        <div><a href="../main/about.php"><span class="icon-person"></span>Ajinkya Rathod</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="sidebar-box ftco-animate">
-                                            <h3 class="sidebar-heading">Paragraph</h3>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                        </div>
-                                    </div>
-                                {% endblock %}
-
-                                {% block end_of_section_and_div %}
-                                </div>
-                        </div>
-                    {% endblock %}
-                    </section>
-            </div><!-- END COLORLIB-MAIN -->
-
-            </div><!-- END COLORLIB-PAGE -->
-
-            {% block loader %}
-                <!-- loader -->
-                <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-            {% endblock %}
-
-            {% block javascript %}
-                <script src="{% static '/js/jquery.min.js' %}"></script>
-                <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-                <script src="{% static 'js/popper.min.js' %}"></script>
-                <script src="{% static 'js/bootstrap.min.js' %}"></script>
-                <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-                <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-                <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-                <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-                <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-                <script src="{% static 'js/aos.js' %}"></script>
-                <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-                <script src="{% static 'js/scrollax.min.js' %}"></script>
-                <script src="{% static 'js/google-map.js' %}"></script>
-                <script src="{% static 'js/main.js' %}"></script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-            {% endblock %}
-
-            {% block accept_cookies %}
-                <!-- Agree to cookies -->
-            {% endblock %}
-
-            {% block scripts %}
-            {% endblock %}
-
-            <!-- Font icons -->
-            <script src="https://kit.fontawesome.com/3f22a23e0c.js" crossorigin="anonymous"></script>
-            <script>
-
-                $(document).ready(function(){
-                                    $('[data-toggle="popover"]').popover();
-                                });
-            </script>
-    </body>
-</html>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="file Name" name="file_name">
+            <div class="input-group-append">
+                <span class="input-group-text">.html</span>
+            </div>
+        </div>
+        {% for m in messages %}
+            <h4 style="color: red;">{{m}}</h4>
+        {% endfor %}
+        <div>
+            <input type="submit" value="Go" class="btn btn-primary">
+        </div>
+    </form>
+{% endblock %}

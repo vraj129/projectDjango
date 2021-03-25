@@ -8,6 +8,17 @@ from django.conf import settings
 # Ex:url that has spaces will be converted into %20
 import urllib.parse
 
+# Pdf
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+
+# from io import BytesIO
+# from xhtml2pdf import pisa
+# from django.template.loader import get_template
+# from django.http import HttpResponse
+# from html import escape
+
 
 # Create your views here.
 def dynamic_article(request, url_title):
@@ -73,3 +84,63 @@ def dynamic_article(request, url_title):
     }
 
     return render(request, 'article.html', article_data)
+
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = dict(context_dict)
+    html = template.render(context)
+    result = BytesIO()
+
+    pdf = pisa.pisaDocument(
+        BytesIO(html.encode("iso-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(
+            result.getvalue(), content_type='application/pdf')
+    return HttpResponse(
+        'we had some errors<pre>%s</pre>' % escape(html))
+
+
+def dynamic_article_as_pdf(request, url_title):
+    request.session['url_to_go'] = request.path
+    try:
+        # If you remove lower() from here,
+        # please remove it from website/views.py - def new: also
+        url_title = url_title.lower()
+        article_data = Article.objects.get(url_title=url_title)
+    except Article.DoesNotExist:
+        raise Http404("No Such Article found")
+
+    # Getting file location
+    file_location = article_data.file_location
+
+    # Reading File
+    file_ = open(os.path.join(settings.BASE_DIR, file_location))
+    file_content = file_.read()
+
+    article_data = {
+        "this_article_title": article_data.title,
+        "file_content": file_content,
+        "project_name": settings.PROJECT_NAME,
+    }
+
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(500, 500, article_data["project_name"])
+    p.drawString(200, 200, article_data["this_article_title"])
+    p.drawString(100, 100, article_data["file_content"])
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='article.pdf')

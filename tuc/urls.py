@@ -18,8 +18,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# from tuc.decorators import staff_required
+
+
+# https://docs.djangoproject.com/en/dev/ref/contrib/admin/#adminsite-objects
+
+
+# admin.site.login = staff_required(admin.site.login)
+# https://stackoverflow.com/questions/66673368/how-to-restrict-non-staff-users-from-accessing-django-admin/
 
 urlpatterns = [
+    # path('admin/logout/$', logout),
     path('admin/', admin.site.urls),
 
     # LOGIN_REDIRECT_URL is defined in settings.py

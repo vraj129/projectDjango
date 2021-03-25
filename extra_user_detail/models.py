@@ -24,11 +24,12 @@ class Extra_User_Detail(models.Model):
     # 59 (We are using 80 for safe side)
     image_url = models.CharField(max_length=80)
     locale = models.CharField(default="en", max_length=10)
+    verified_profile = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return str(self.user.email + " - " + self.user.username)
 
 
-class Item(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    image_url = models.URLField()
+# class Item(models.Model):
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     image_url = models.URLField()

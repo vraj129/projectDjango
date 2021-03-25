@@ -11,8 +11,9 @@ admin.site.site_title = settings.PROJECT_NAME
 
 urlpatterns = [
     path('', views.home, name='Home Page'),
-    path('new/', views.new2, name='New Page'),
-    path('new/<slug:slug>/', views.new, name='New Page'),
+    path('new/', views.new, name='New Page'),
+    # path('new/', views.new2, name='New Page'),
+    # path('new/<slug:slug>/', views.new, name='New Page'),
     # path('edit/<slug:slug>/', views.edit, name='Edit Page'),
 
     # Editing Article

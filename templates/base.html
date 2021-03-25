@@ -55,14 +55,19 @@
         {% block head_content %}
         {% endblock %}
 
+        <style>
+.fa-user-check{
+    color: #1eafed;
+}
+        </style>
 
     </head>
     <body>
 
         {% block facebook_sharing_link %}
-        <!-- Facebook Sharing -->
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0&appId=812203096174919&autoLogAppEvents=1" nonce="pV7TAykt"></script>
+            <!-- Facebook Sharing -->
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0&appId=812203096174919&autoLogAppEvents=1" nonce="pV7TAykt"></script>
         {% endblock %}
 
         {% block facebook_commenting %}
@@ -110,6 +115,11 @@
                                             <i class="fa fa-plus-circle" aria-hidden="true"></i> New
                                         </a>
                                     </li>
+                                    <li class="active-admin">
+                                        <a href="/admin/" target="_blank">
+                                            <i class="fas fa-user-shield"></i> Admin Site
+                                        </a>
+                                    </li>
 
                                 {% endif %}
                                 <hr> <!-- HR -->
@@ -140,6 +150,10 @@
                                 <li class="active-profile profile_name">
                                     <a href="#" title="{{ user.first_name}} {{ user.last_name }}" data-placement="top" data-toggle="popover" data-html="true" data-content="<a class='logout-text' href='/logout'>Logout of @{{ user.username }} </a>">
                                         <img src="{{ profile_picture }}" alt="Profile Picture" class="profile_picture">{{ user.first_name }} {{ user.last_name }}
+                                        {% if verified_profile %}
+                                            <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                                            <i class="fas fa-user-check"></i>
+                                        {% endif %}
                                     </a>
                                 </li>
                             {% endif %}
@@ -163,6 +177,7 @@
                         <p class="pfooter">
                         Made by <a href="https://colorlib.com" target="_blank">Colorlib </a> and <a href="https://instagram.com/theunitedcodes" target="_blank"> {{ project_name }}</a>
                         </p>
+
                     </div>
                 </aside>
             {% endblock %}

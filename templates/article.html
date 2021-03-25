@@ -21,9 +21,20 @@
 .aj-img{
     max-height:200px;
 }
-.superuser-tasks a{
+.stay_left{
+    float: left;
+}
+.stay_left a{
     padding: 0 5px;
+}
+.more_tasks, .stay_right {
     float: right;
+}
+.stay_right .ellipsis_more{
+    cursor: pointer;
+}
+.more_tasks a{
+    padding: 0 5px;
 }
 .social-share-links{
     display: flex;
@@ -59,16 +70,17 @@
                         <!-- <br>{{ this_article.date_modified }} -->
                         <!-- <br>{{ this_article.date_created }} -->
 
-                        {% if user.is_superuser %}
-                            <div class="superuser-tasks">
+                        <div class="more_tasks">
+                            {% if user.is_superuser %}
                                 {% if this_article.publish_status %}
                                     <a href="#"><button class="btn btn-sm btn-warning">Archieve</button></a>
                                 {% else %}
                                     <a href="#"><button class="btn btn-sm btn-warning">Publish</button></a>
                                 {% endif %}
                                 <a href="/edit/{{ this_article.url_title }}"><button class="btn btn-sm btn-info">Edit</button></a>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
+
                         <h1 class="mb-3"> {{ this_article.title |title }}</h1>
 
                         <!-- File Content -->
@@ -102,6 +114,22 @@
 
                                 </div>
                             {% endif %}
+                        </div>
+
+                        <hr>
+                        <div class="stay_left">
+                            <!-- <a href="pdf/"> -->
+                            <!--     <i class="fas fa-print"></i> Print Article -->
+                            <!-- </a> -->
+                            <a href="#">
+                                <i class="far fa-envelope"></i> Email Article
+                            </a>
+                        </div>
+
+                        <div class="stay_right">
+                            <a class="ellipsis_more">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
                         </div>
 
                         <!-- To enable Facebook Moderator Commenting,
