@@ -24,13 +24,13 @@
 .stay_left{
     float: left;
 }
-.stay_left a{
-    padding: 0 5px;
+.stay_left a, .stay_right a, .stay_right_items{
+    padding: 0 8px;
 }
 .more_tasks, .stay_right {
     float: right;
 }
-.stay_right .ellipsis_more{
+.stay_right .fa_pointer{
     cursor: pointer;
 }
 .more_tasks a{
@@ -87,6 +87,7 @@
                         <!-- This built in tag named "safe" is harmful. Use only if u trust the content -->
                         <div id="fileContent"> {{ file_content|safe }} </div>
 
+                        <hr>
                         <div class="social-share-links row">
                             <div class="social-share-button fb-share-button" data-href="{{ request.build_absolute_uri }}" data-layout="button_count" data-size="large">
                                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ share_string }}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share To Facebook</a>
@@ -116,7 +117,7 @@
                             {% endif %}
                         </div>
 
-                        <hr>
+                        <!-- <hr> -->
                         <div class="stay_left">
                             <!-- <a href="pdf/"> -->
                             <!--     <i class="fas fa-print"></i> Print Article -->
@@ -127,10 +128,40 @@
                         </div>
 
                         <div class="stay_right">
-                            <a class="ellipsis_more">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </a>
+                            <span class="btn btn-sm btn-light">
+                                <a class="fa_pointer stay_right_items">
+                                    {% if saved %}
+                                        Save Article <i class="far fa-bookmark"></i>
+                                    {% else %}
+                                        Saved <i class="fas fa-bookmark"></i>
+                                    {% endif %}
+                                </a>
+                            </span>
+                            <span class="dropdown fa_pointer stay_right_items">
+                                <span class="btn btn-sm btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    More
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </span>
+                                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Report</a>
+                                    <!-- Fake information -->
+                                    <!-- Hate Speech -->
+                                    <!-- Harrasment -->
+                                    <!-- Illegal Sale -->
+                                    <!-- Nudity -->
+                                    <!-- Spam -->
+                                    <!-- Violence -->
+                                    <!-- Violation of Laws -->
+                                    <!-- Other -->
+                                    <a class="dropdown-item" href="#">Copy Link</a>
+                                    <a class="dropdown-item">Cancel</a>
+                                </span>
+                            </span>
                         </div>
+                        <div style="clear: both;"></div>
+
+                        <hr>
+                        <div style="margin-bottom: 30px;"></div>
 
                         <!-- To enable Facebook Moderator Commenting,
                             you need to from development mode to live

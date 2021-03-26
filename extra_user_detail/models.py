@@ -31,5 +31,17 @@ class Extra_User_Detail(models.Model):
 
 
 # class Item(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     id = models.UUIDField(primary_key=True,
+#                           default=uuid.uuid4,
+#                           editable=False)
 #     image_url = models.URLField()
+
+# this_table_id(auto generated)
+
+# article_id
+# user_id
+# read_status
+# saved_status
+# engagement_time
+class Article_Interaction(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)

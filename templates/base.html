@@ -148,8 +148,10 @@
                                 </li>
 
                                 <li class="active-profile profile_name">
-                                    <a href="#" title="{{ user.first_name}} {{ user.last_name }}" data-placement="top" data-toggle="popover" data-html="true" data-content="<a class='logout-text' href='/logout'>Logout of @{{ user.username }} </a>">
-                                        <img src="{{ profile_picture }}" alt="Profile Picture" class="profile_picture">{{ user.first_name }} {{ user.last_name }}
+                                    <a href="#" id="testpop" title="{{ user.first_name}} {{ user.last_name }}" data-placement="top" data-toggle="popover" data-html="true" data-content="<a class='logout-text' href='/logout'>Logout of @{{ user.username }} </a>">
+                                        <img src="{{ profile_picture }}" alt="Profile Picture" class="profile_picture">
+                                        <!-- {{ user.first_name }} {{ user.last_name }} -->
+                                        {{ user.username }}
                                         {% if verified_profile %}
                                             <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
                                             <i class="fas fa-user-check"></i>
@@ -280,9 +282,12 @@
             <script src="https://kit.fontawesome.com/3f22a23e0c.js" crossorigin="anonymous"></script>
             <script>
 
-                $(document).ready(function(){
-                                    $('[data-toggle="popover"]').popover();
-                                });
+                //  To prevent popover to scroll back to top of the page
+                $('a#testpop').on('click', function(e) {e.preventDefault(); return true;});
+
+                                $(document).ready(function(){
+                                                    $('[data-toggle="popover"]').popover();
+                                                });
             </script>
     </body>
 </html>

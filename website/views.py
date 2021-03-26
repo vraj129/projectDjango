@@ -144,7 +144,7 @@ def confirm_publish(request):
     codeContent = request.GET.get('codeContent')
     publish_title = request.GET.get('publish_title')
     publish_meta_keywords = request.GET.get('publish_meta_keywords')
-    publish_meta_current_page_url = request.GET.get('publish_meta_current_page_url')
+    # publish_meta_current_page_url = request.GET.get('publish_meta_current_page_url')
     publish_meta_description = request.GET.get('publish_meta_description')
     publish_meta_image_url = request.GET.get('publish_meta_image_url')
     publish_facebook_sharing_link = request.GET.get('publish_facebook_sharing_link')

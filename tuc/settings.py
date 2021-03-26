@@ -215,4 +215,4 @@ DATABASE_NAME = 'tuc'
 
 
 # Template tags and filters - a | title
-# TIME_ZONE = 'Asia/Kolkata'
+# TIME_ZONE = 'Iceland'

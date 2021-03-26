@@ -62,13 +62,4 @@ class Article(models.Model):
     #             str(self.url_title) + " (" + str(self.meta_description) + ")")
 
 
-# this_table_id(auto generated)
-
-# article_id
-# user_id
-# read_status
-# saved_status
-# engagement_time
-
-
 # trending_articles
