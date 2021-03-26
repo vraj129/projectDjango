@@ -43,6 +43,9 @@
 .social-share-button{
     padding: 10px 10px;
 }
+.report_article span{
+    display: block;
+}
     </style>
 {% endblock %}
 
@@ -143,22 +146,81 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </span>
                                 <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Report</a>
-                                    <!-- Fake information -->
-                                    <!-- Hate Speech -->
-                                    <!-- Harrasment -->
-                                    <!-- Illegal Sale -->
-                                    <!-- Nudity -->
-                                    <!-- Spam -->
-                                    <!-- Violence -->
-                                    <!-- Violation of Laws -->
-                                    <!-- Other -->
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#report_article">Report</a>
                                     <a class="dropdown-item" href="#">Copy Link</a>
                                     <a class="dropdown-item">Cancel</a>
                                 </span>
                             </span>
                         </div>
                         <div style="clear: both;"></div>
+
+                        <!-- The Report Article Modal Starts -->
+                        <div class="modal" id="report_article">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Report</h3>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body report_article">
+                                        <h4>Reason for reporting the post</h4>
+                                        <span>
+                                            <input type="radio" id="report_fake_info" name="report_reason" value="fake_info">
+                                            <label for="report_fake_info">Fake Information</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_hate_speech" name="report_reason" value="hate_speech">
+                                            <label for="report_hate_speech">Hate Speech</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_harrasment" name="report_reason" value="harrasment">
+                                            <label for="report_harrasment">Harrasment</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_illegal_sale" name="report_reason" value="illegal_sale">
+                                            <label for="report_illegal_sale">Illegal Sale</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_nudity" name="report_reason" value="nudity">
+                                            <label for="report_nudity">Nudity</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_spam" name="report_reason" value="spam">
+                                            <label for="report_spam">Spam</label>
+                                        </span>
+
+
+                                        <span>
+                                            <input type="radio" id="report_violation_of_laws" name="report_reason" value="violation_of_laws">
+                                            <label for="report_violation_of_laws">Violation of Laws</label>
+                                        </span>
+
+                                        <span>
+                                            <input type="radio" id="report_others" name="report_reason" value="report_others">
+                                            <label for="report_others">Others</label>
+                                        </span>
+
+                                        <textarea id="report_reason_text" name="report_reason_text" style="width:100%;" rows="5"></textarea>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- The Report Article Modal Ends -->
 
                         <hr>
                         <div style="margin-bottom: 30px;"></div>

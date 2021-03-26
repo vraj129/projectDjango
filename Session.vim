@@ -30,26 +30,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 124 - ((14 * winheight(0) + 17) / 34)
+let s:l = 212 - ((24 * winheight(0) + 17) / 34)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-124
-normal! 033|
+212
+normal! 0157|
 tabnext 1
-badd +0 users/views.py
-badd +34 article/admin.py
-badd +58 article/models.py
-badd +14 tuc/wsgi.py
-badd +44 tuc/urls.py
-badd +118 website/views.py
-badd +42 tuc/settings.py
-badd +5 social_login/urls.py
-badd +3 tuc/decorators.py
-badd +0 article/views.py
-badd +28 tuc/admin.py
-badd +3 tuc/apps.py
-badd +99 templates/base.html
 badd +0 templates/article.html
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -62,6 +49,7 @@ if file_readable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &so = s:so_save | let &siso = s:siso_save
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
