@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Group
+from .models import Article, Group, Report
 from django.contrib import messages
 from django.utils.translation import ngettext
 
@@ -70,6 +70,46 @@ class ArticleAdmin(admin.ModelAdmin):
     #                       "Disable comments")
 
 
+class ReportAdmin(admin.ModelAdmin):
+
+    list_display = ('id', 'article_link',
+                    'user',
+                    'reason', 'short_reason',
+                    'solved_status',
+                    'date_created',
+                    )
+
+    ordering = ['solved_status', 'date_created']
+    # highetst count of artcile link
+    # count of reason
+
+    actions = [
+        'mark_as_solved',
+        'mark_as_unsolved',
+    ]
+
+    def mark_as_solved(self, request, queryset):
+        updated = queryset.update(solved_status=True)
+        self.message_user(request, ngettext(
+            '%d article was successfully marked as Solved.',
+            '%d articles were successfully marked as Solved.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
+    mark_as_solved.short_description = "Mark as Solved"
+
+    def mark_as_unsolved(self, request, queryset):
+        updated = queryset.update(solved_status=False)
+        self.message_user(request, ngettext(
+            '%d article was marked as NOT Solved.',
+            '%d articles were marked as NOT Solved.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
+    mark_as_unsolved.short_description = "Mark as NOT Solved"
+
+
 # Register your models here.
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Report, ReportAdmin)
 admin.site.register(Group)

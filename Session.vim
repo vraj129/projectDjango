@@ -30,12 +30,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 212 - ((24 * winheight(0) + 17) / 34)
+let s:l = 157 - ((16 * winheight(0) + 17) / 34)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-212
-normal! 0157|
+157
+normal! 070|
 tabnext 1
 badd +0 templates/article.html
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0

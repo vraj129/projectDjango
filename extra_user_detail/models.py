@@ -43,5 +43,6 @@ class Extra_User_Detail(models.Model):
 # read_status
 # saved_status
 # engagement_time
-class Article_Interaction(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+# class Article_Interaction(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)

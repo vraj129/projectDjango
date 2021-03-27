@@ -18,6 +18,9 @@
     <!-- Facebook Comments Moderation -->
     <meta property="fb:app_id" content="812203096174919" />
     <style>
+#link_to_copy{
+    display: none;
+}
 .aj-img{
     max-height:200px;
 }
@@ -147,12 +150,22 @@
                                 </span>
                                 <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" data-toggle="modal" data-target="#report_article">Report</a>
-                                    <a class="dropdown-item" href="#">Copy Link</a>
+                                    <a class="dropdown-item" id="copy_link_dropdown_item">Copy Link</a>
                                     <a class="dropdown-item">Cancel</a>
                                 </span>
                             </span>
                         </div>
                         <div style="clear: both;"></div>
+
+
+                        <input type="text" name="copy_link" id="link_to_copy">
+
+                        <!-- <div class="toast" data-autohide="false"> -->
+                        <div class="toast">
+                            <div class="toast-header">
+                                <strong class="mr-auto">Link Copied</strong>
+                            </div>
+                        </div>
 
                         <!-- The Report Article Modal Starts -->
                         <div class="modal" id="report_article">
@@ -205,16 +218,16 @@
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_others" name="report_reason" value="report_others">
+                                            <input type="radio" id="report_others" name="report_reason" value="others">
                                             <label for="report_others">Others</label>
                                         </span>
 
-                                        <textarea id="report_reason_text" name="report_reason_text" style="width:100%;" rows="5"></textarea>
+                                        <textarea id="report_reason_text" name="report_reason_text" style="width:100%;" rows="2" required></textarea>
                                     </div>
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Report</button>
                                     </div>
 
                                 </div>
@@ -249,6 +262,7 @@
                             Edit Article on Clicking edit
                             Featured Image <br>
                             Show more posts here. No one is going back<br>
+                            Hindi also <br>
                         </div>
 
                         <br><br>
@@ -271,22 +285,39 @@
                             <h2><a href="/">Go to Home Page</a></h2>
                         </center>
                     {% endif %}
+                        </div>
                 </div>
-            </div>
-        {% else %}
-            {% include 'signin.html' %}
-        {% endif %}
-        <!-- END -->
-    {% endblock %}
+            {% else %}
+                {% include 'signin.html' %}
+            {% endif %}
+            <!-- END -->
+        {% endblock %}
 
-    {% block third_div_after_section_ends %}
-        </div>
-    {% endblock %}
+        {% block third_div_after_section_ends %}
+                </div>
+            {% endblock %}
 
-    {% block scripts %}
-        <script>
-            $(document).ready(function() {
-                            console.log("HI")
-                        });
-        </script>
-    {% endblock %}
+            {% block scripts %}
+
+                <script>
+                    $(document).ready(function() {
+                                            {% if DEBUG is False %}
+                                                $("#link-to-copy").val("https://www.{{ project_name }}.com/article/" + "{{ request.session.url_title}}");
+                                        {% else %}
+                                                $("#link-to-copy").val("{{ project_name }}/article/" + "{{ request.session.url_title}}");
+                                        {% endif %}
+                                            console.log("HI")
+                                        });
+
+
+                            $("#copy_link_dropdown_item").click(function(){
+                                                    var copyText = document.getElementById("link_to_copy");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+
+                                                                $('.toast').toast('show')
+                                                                console.log("Jai Swaminarayan")
+                                                            });
+                </script>
+            {% endblock %}

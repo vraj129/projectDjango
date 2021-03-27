@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
+import uuid
+from django.contrib.auth.models import User
+from django.template.defaultfilters import truncatechars  # or truncatewords
 
 
 class Group(models.Model):
@@ -21,7 +24,9 @@ class Article(models.Model):
     title = models.CharField(max_length=80)  # Try not to exceed 70
 
     # url
-    url_title = models.CharField(max_length=80, unique=True)  # Try not to exceed 70
+    url_title = models.CharField(max_length=80,
+                                 unique=True,
+                                 db_index=True)  # Try not to exceed 70
 
     # indexing_count
     # index_increment_in_last_5_days
@@ -62,4 +67,60 @@ class Article(models.Model):
     #             str(self.url_title) + " (" + str(self.meta_description) + ")")
 
 
+FAKE_INFO = 'FI'
+HATE_SPEECH = 'HS'
+HARRASMENT = 'HR'
+ILLEGAL_SALE = 'IS'
+NUDITY = 'ND'
+SPAM = 'SP'
+VIOLATION_OF_LAWS = 'VL'
+OTHERS = 'OT'
+
+REPORT_REASON = (
+    (FAKE_INFO, 'Fake Information'),
+    (HATE_SPEECH, 'Hate Speech'),
+    (HARRASMENT, 'Harrasment'),
+    (ILLEGAL_SALE, 'llegal Sale'),
+    (NUDITY, 'Nudity'),
+    (SPAM, 'Spam'),
+    (VIOLATION_OF_LAWS, 'Violation of Laws'),
+    (OTHERS, 'Others'),
+)
+
+
+class Report(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # Use PROTECT as of now, RESTRICT is not supported in current version
+    # RESTRICT: (introduced in Django 3.1)
+    # Similar behavior as PROTECT that matches SQL's RESTRICT more accurately.
+    # article_link = models.OneToOneField(Article, on_delete=models.RESTRICT)
+    # article_link = models.OneToOneField(Article, on_delete=models.PROTECT)
+    article_link = models.ForeignKey(Article, on_delete=models.PROTECT)
+
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    # If ForeignKey duplicate fields are not inserted,
+    # delete all migartions and try again
+    # IF even after deleting all migrations, it gives an DB error,
+    # Open database and drop the same table and try again
+
+    reason = models.CharField(max_length=2,
+                              choices=REPORT_REASON,
+                              # default='green',
+                              )
+
+    brief_reason = models.TextField(blank=True, max_length=1023)
+
+    @property
+    def short_reason(self):
+        return truncatechars(self.brief_reason, 280)
+    solved_status = models.BooleanField(default=False)
+
+    # Date Created
+    date_created = models.DateTimeField(auto_now_add=now)
+
+
+# # Make this Model also (shayad jarur padse):
 # trending_articles
+
