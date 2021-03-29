@@ -191,157 +191,157 @@
 
 {% block scripts %}
     <script>
-        $(document).ready(function() {
-                    $('[data-toggle="tooltip"]').tooltip();
-                });
+$(document).ready(function() {
+$('[data-toggle="tooltip"]').tooltip();
+});
     </script>
 
     <script>
-        $(document).ready(function() {
-                    $("#preview-nav").click(function() {
-                                // $("#preview").load(location.href + " #preview > *");
-                                // $("#preview").load('{% static "demo.html" %}');
-                                // var b = $('#codeContent').html(a);
-                                var codeContentValue = document.getElementById("codeContent");
-                                var s = codeContentValue.value;
+$(document).ready(function() {
+$("#preview-nav").click(function() {
+// $("#preview").load(location.href + " #preview > *");
+// $("#preview").load('{% static "demo.html" %}');
+// var b = $('#codeContent').html(a);
+var codeContentValue = document.getElementById("codeContent");
+var s = codeContentValue.value;
 
-                                var finalpreview = document.getElementById("preview");
-                                finalpreview.innerHTML = s;
-                            });
-                });
+var finalpreview = document.getElementById("preview");
+finalpreview.innerHTML = s;
+});
+});
 
-                $(function() {
-                            $("textarea[maxlength]").bind('input propertychange', function() {
-                                        var maxLength = $(this).attr('maxlength');
-                                        if ($(this).val().length > maxLength) {
-                                                    $(this).val($(this).val().substring(0, maxLength));
-                                                }
-                                    })
-                        });
+$(function() {
+$("textarea[maxlength]").bind('input propertychange', function() {
+var maxLength = $(this).attr('maxlength');
+if ($(this).val().length > maxLength) {
+$(this).val($(this).val().substring(0, maxLength));
+}
+})
+});
 
     </script>
 
     <script>
-        $('#myModal').on('shown.bs.modal', function () {
-                    $('#myInput').trigger('focus')
-                })
+$('#myModal').on('shown.bs.modal', function () {
+$('#myInput').trigger('focus')
+})
 
-                function copyLinkToClipboard() {
-                            var range = document.createRange();
-                            range.selectNode(document.getElementById("link-to-copy"));
-                            window.getSelection().removeAllRanges(); // clear current selection
-                            window.getSelection().addRange(range); // to select text
-                            document.execCommand("copy");
-                            window.getSelection().removeAllRanges();// to deselect
-                            document.getElementById("clipboard-copy-status").innerHTML = "Link Copied to Clipboard!"
-                        }
+function copyLinkToClipboard() {
+var range = document.createRange();
+range.selectNode(document.getElementById("link-to-copy"));
+window.getSelection().removeAllRanges(); // clear current selection
+window.getSelection().addRange(range); // to select text
+document.execCommand("copy");
+window.getSelection().removeAllRanges();// to deselect
+document.getElementById("clipboard-copy-status").innerHTML = "Link Copied to Clipboard!"
+}
     </script>
 
     <script>
-        $("#publishButton2").click(function () {
-                    console.log("Hi")
-                    var codeContent = $('#codeContent').val();
-                    var publish_title = $('#publish_title').val();
-                    var publish_url_title = $('#publish_url_title').val();
-                    var publish_meta_keywords = $('#publish_meta_keywords').val();
-                    var publish_meta_current_page_url = $('#publish_meta_current_page_url').val();
-                    var publish_meta_description = $('#publish_meta_description').val();
-                    var publish_meta_image_url = $('#publish_meta_image_url').val();
-                    var publish_facebook_sharing_link = $('#publish_facebook_sharing_link').val();
+$("#publishButton2").click(function () {
+console.log("Hi")
+var codeContent = $('#codeContent').val();
+var publish_title = $('#publish_title').val();
+var publish_url_title = $('#publish_url_title').val();
+var publish_meta_keywords = $('#publish_meta_keywords').val();
+var publish_meta_current_page_url = $('#publish_meta_current_page_url').val();
+var publish_meta_description = $('#publish_meta_description').val();
+var publish_meta_image_url = $('#publish_meta_image_url').val();
+var publish_facebook_sharing_link = $('#publish_facebook_sharing_link').val();
 
-                    $.ajax({
-                                url: '{% url 'confirm_publish' %}',
-                                data: {
-                                            'codeContent': codeContent,
-                                            'publish_title': publish_title,
-                                            'publish_meta_keywords': publish_meta_keywords,
-                                            'publish_meta_current_page_url': publish_meta_current_page_url,
-                                            'publish_meta_description': publish_meta_description,
-                                            'publish_meta_image_url': publish_meta_image_url,
-                                            'publish_facebook_sharing_link': publish_facebook_sharing_link,
-                                        },
-                                dataType: 'json',
-                                success: function (response_data) {
-                                            document.getElementById('saving-status').innerHTML = response_data["response"];
-                                        }
-                            });
-                    console.log("Hi")
-                    $("#publishButton").removeAttr("disabled");
-                    console.log("Hi")
-                    $('#confirmation-box').modal('hide');
-                    console.log("Hi")
+$.ajax({
+url: '{% url 'confirm_publish' %}',
+data: {
+'codeContent': codeContent,
+'publish_title': publish_title,
+'publish_meta_keywords': publish_meta_keywords,
+'publish_meta_current_page_url': publish_meta_current_page_url,
+'publish_meta_description': publish_meta_description,
+'publish_meta_image_url': publish_meta_image_url,
+'publish_facebook_sharing_link': publish_facebook_sharing_link,
+},
+dataType: 'json',
+success: function (response_data) {
+document.getElementById('saving-status').innerHTML = response_data["response"];
+}
+});
+console.log("Hi")
+$("#publishButton").removeAttr("disabled");
+console.log("Hi")
+$('#confirmation-box').modal('hide');
+console.log("Hi")
 
-                });
+});
     </script>
 
     <script>
-        $("#sender").click(function () {
-                    var codeContent = $('#codeContent').val();
-                    var publish_title = $('#publish_title').val();
-                    var publish_url_title = $('#publish_url_title').val();
-                    var publish_meta_keywords = $('#publish_meta_keywords').val();
-                    var publish_meta_current_page_url = $('#publish_meta_current_page_url').val();
-                    var publish_meta_description = $('#publish_meta_description').val();
-                    var publish_meta_image_url = $('#publish_meta_image_url').val();
-                    var publish_facebook_sharing_link = $('#publish_facebook_sharing_link').val();
+$("#sender").click(function () {
+var codeContent = $('#codeContent').val();
+var publish_title = $('#publish_title').val();
+var publish_url_title = $('#publish_url_title').val();
+var publish_meta_keywords = $('#publish_meta_keywords').val();
+var publish_meta_current_page_url = $('#publish_meta_current_page_url').val();
+var publish_meta_description = $('#publish_meta_description').val();
+var publish_meta_image_url = $('#publish_meta_image_url').val();
+var publish_facebook_sharing_link = $('#publish_facebook_sharing_link').val();
 
-                    document.getElementById('saving-status').innerHTML = "Saving...";
-                    $.ajax({
-                                url: '{% url 'get_response' %}',
-                                data: {
-                                            'codeContent': codeContent,
-                                            'publish_title': publish_title,
-                                            'publish_meta_keywords': publish_meta_keywords,
-                                            'publish_meta_current_page_url': publish_meta_current_page_url,
-                                            'publish_meta_description': publish_meta_description,
-                                            'publish_meta_image_url': publish_meta_image_url,
-                                            'publish_facebook_sharing_link': publish_facebook_sharing_link,
-                                        },
-                                dataType: 'json',
-                                success: function (response_data) {
-                                            document.getElementById('saving-status').innerHTML = response_data["response"];
-                                        }
-                            });
-                    $("#publishButton").removeAttr("disabled");
-                });
+document.getElementById('saving-status').innerHTML = "Saving...";
+$.ajax({
+url: '{% url 'get_response' %}',
+data: {
+'codeContent': codeContent,
+'publish_title': publish_title,
+'publish_meta_keywords': publish_meta_keywords,
+'publish_meta_current_page_url': publish_meta_current_page_url,
+'publish_meta_description': publish_meta_description,
+'publish_meta_image_url': publish_meta_image_url,
+'publish_facebook_sharing_link': publish_facebook_sharing_link,
+},
+dataType: 'json',
+success: function (response_data) {
+document.getElementById('saving-status').innerHTML = response_data["response"];
+}
+});
+$("#publishButton").removeAttr("disabled");
+});
     </script>
 
     <script>
-        function disable_publish_before_save(){
-                    document.getElementById('publishButton').disabled=true;
-                    document.getElementById('saving-status').innerText="Not saved";
-                }
+function disable_publish_before_save(){
+document.getElementById('publishButton').disabled=true;
+document.getElementById('saving-status').innerText="Not saved";
+}
     </script>
 
     <script>
-        $(document).ready(function(){
+$(document).ready(function(){
 
-                    {% if DEBUG is False %}
-                        $("#link-to-copy").text("https://www.{{ project_name }}.com/article/" + "{{ request.session.url_title}}");
+{% if DEBUG is False %}
+    $("#link-to-copy").text("https://www.{{ project_name }}.com/article/" + "{{ request.session.url_title}}");
                 {% else %}
-                        $("#link-to-copy").text("{{ project_name }}/article/" + "{{ request.session.url_title}}");
+    $("#link-to-copy").text("{{ project_name }}/article/" + "{{ request.session.url_title}}");
                 {% endif %}
 
-                    $("#publish_categories").keyup(function(){
-                                var search_string = this.value;
-                                console.log(search_string)
-                                $.ajax({
-                                            url: '{% url 'get_categories' %}',
-                                            data: {
-                                                        'search_string': search_string,
-                                                    },
-                                            dataType: 'json',
-                                            success: function (response_data) {
-                                                        var output = "";
-                                                        for (x in response_data["response"]){
-                                                                    output += response_data["response"][x]["category_name"] + ", "
-                                                                }
-                                                        console.log(output);
-                                                        document.getElementById('categories_list').innerHTML = output;
-                                                    }
-                                        });
-                            });
-                });
+$("#publish_categories").keyup(function(){
+var search_string = this.value;
+console.log(search_string)
+$.ajax({
+url: '{% url 'get_categories' %}',
+data: {
+'search_string': search_string,
+},
+dataType: 'json',
+success: function (response_data) {
+var output = "";
+for (x in response_data["response"]){
+output += response_data["response"][x]["category_name"] + ", "
+}
+console.log(output);
+document.getElementById('categories_list').innerHTML = output;
+}
+});
+});
+});
     </script>
 
 {% endblock %}

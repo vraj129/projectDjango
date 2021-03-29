@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Group, Report
+from .models import Article, Group, Report, Viewer
 from django.contrib import messages
 from django.utils.translation import ngettext
 
@@ -71,21 +71,22 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 class ReportAdmin(admin.ModelAdmin):
-
-    list_display = ('id', 'article_link',
-                    'user',
+    list_display = ('id',
+                    'article_id',  # fk
+                    'user_id',  # fk
                     'reason', 'short_reason',
                     'solved_status',
                     'date_created',
                     )
 
-    ordering = ['solved_status', 'date_created']
+    # ordering = ['solved_status', 'date_created']
     # highetst count of artcile link
     # count of reason
 
     actions = [
         'mark_as_solved',
         'mark_as_unsolved',
+        # 'show_artist_count',
     ]
 
     def mark_as_solved(self, request, queryset):
@@ -106,10 +107,38 @@ class ReportAdmin(admin.ModelAdmin):
             updated,
         ) % updated, messages.SUCCESS)
 
+    # def get_queryset(self, request):
+    #     qs = super(ReportAdmin, self).get_queryset(request)
+    #     # return qs.filter(user__username__icontains="jo")
+    #     return qs.annotate(num_user=Count('user'))
+    #     # return qs.annotate(Count('article_link'))
+    #     # if request.user.is_superuser:
+    #     #     return qs
+
+    # def queryset(self, request):
+    # def get_queryset(self, request):
+    #     qs = super(ReportAdmin, self).get_queryset(request)
+    #     # return qs.filter(user__username__icontains="jo")
+    #     return qs.annotate(user_count=Count('user'))
+
+    # def show_user_count(self, inst):
+    #     return inst.user_count
+    # show_user_count.admin_order_field = 'user_count'
+
     mark_as_unsolved.short_description = "Mark as NOT Solved"
 
 
+class ViewerAdmin(admin.ModelAdmin):
+    list_display = ('id',
+                    'device_agent',
+                    'is_touch_capable', 'is_bot',
+                    'browser_details', 'os_details', 'device_agent_family',
+                    'date_viewed'
+                    )
+
+
 # Register your models here.
+admin.site.register(Viewer, ViewerAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(Group)

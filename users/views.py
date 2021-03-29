@@ -7,6 +7,7 @@ from extra_user_detail.models import Extra_User_Detail
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from allauth.socialaccount.models import SocialAccount
+from django_ip_geolocation.decorators import with_ip_geolocation
 
 
 my_database = settings.CLIENT[settings.DATABASE_NAME]
@@ -44,8 +45,13 @@ my_database = settings.CLIENT[settings.DATABASE_NAME]
 #     })
 
 
+@with_ip_geolocation
 @login_required
 def profile_picture(request):
+    # Getting location based on IP
+    location = request.geolocation
+    print(location, " *Location is approximate based on the login's IP address.")
+
     # Getting Current Logged in User
     current_user = request.user
 

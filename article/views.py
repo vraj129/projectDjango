@@ -1,66 +1,33 @@
 from django.shortcuts import render, Http404
-from .models import Article
-
+from .models import Article, Viewer
+from django.contrib.auth.models import User
+from .utils import get_client_ip
 import os
 from django.conf import settings
 
 # To convert urls
 # Ex:url that has spaces will be converted into %20
 import urllib.parse
-
 # Pdf
 import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 
-# from io import BytesIO
-# from xhtml2pdf import pisa
-# from django.template.loader import get_template
-# from django.http import HttpResponse
-# from html import escape
-
 
 # Create your views here.
 def dynamic_article(request, url_title):
-    # Mobile device detection Starts
-    # Let's assume that the visitor uses an iPhone...
-    request.user_agent.is_mobile  # returns True
-    request.user_agent.is_tablet  # returns False
-    request.user_agent.is_touch_capable  # returns True
-    request.user_agent.is_pc  # returns False
-    request.user_agent.is_bot  # returns False
-
-    # Accessing user agent's browser attributes
-    request.user_agent.browser  # returns Browser(
-    # family=u'Mobile Safari', version=(5, 1), version_string='5.1')
-    request.user_agent.browser.family  # returns 'Mobile Safari'
-    request.user_agent.browser.version  # returns (5, 1)
-    request.user_agent.browser.version_string   # returns '5.1'
-
-    # Operating System properties
-    request.user_agent.os  # returns OperatingSystem(
-    # family=u'iOS', version=(5, 1), version_string='5.1')
-    request.user_agent.os.family  # returns 'iOS'
-    request.user_agent.os.version  # returns (5, 1)
-    request.user_agent.os.version_string  # returns '5.1'
-
-    # Device properties
-    request.user_agent.device  # returns Device(family='iPhone')
-    request.user_agent.device.family  # returns 'iPhone'
-    # Mobile device detection Ends
-
     request.session['url_to_go'] = request.path
 
     try:
         # If you remove lower() from here,
         # please remove it from website/views.py - def new: also
         url_title = url_title.lower()
-        article_data = Article.objects.get(url_title=url_title)
+        article_data_obj = Article.objects.get(url_title=url_title)
     except Article.DoesNotExist:
         raise Http404("No Such Article found")
 
     # Getting file location
-    file_location = article_data.file_location
+    file_location = article_data_obj.file_location
 
     # Reading File
     file_ = open(os.path.join(settings.BASE_DIR, file_location))
@@ -77,28 +44,63 @@ def dynamic_article(request, url_title):
     share_link = urllib.parse.quote(absolute_url, safe='')
 
     article_data = {
-        "this_article": article_data,
+        "this_article": article_data_obj,
         "file_content": file_content,
         "share_string": share_string,
         "share_link": share_link,
     }
 
+    # Inserting Viewer Details - Start
+    article_instance = Article.objects.get(pk=article_data_obj.id)
+    user_instance = User.objects.get(pk=request.user.id)
+
+    # MOBILE = 'M'
+    # TABLET = 'T'
+    # PC = 'P'
+    # NONE = 'N'
+
+    if request.user_agent.is_mobile:
+        device_agent = 'M'
+    elif request.user_agent.is_tablet:
+        device_agent = 'T'
+    elif request.user_agent.is_pc:
+        device_agent = 'P'
+    else:
+        device_agent = 'N'
+
+    # obj, created = Viewer.objects.get_or_create(
+    obj, created = Viewer.objects.update_or_create(
+        article_id=article_instance,
+        user_id=user_instance,
+        ip_address=get_client_ip(request),
+
+        device_agent=device_agent,
+        is_touch_capable=request.user_agent.is_touch_capable,
+        is_bot=request.user_agent.is_bot,
+        browser_details=request.user_agent.browser.family,
+        os_details=request.user_agent.os.family,
+        device_agent_family=request.user_agent.device.family
+    )
+    print("=======--", created)
+
+    # Inserting Viewer Details - Ends
+
     return render(request, 'article.html', article_data)
 
 
-def render_to_pdf(template_src, context_dict):
-    template = get_template(template_src)
-    context = dict(context_dict)
-    html = template.render(context)
-    result = BytesIO()
-
-    pdf = pisa.pisaDocument(
-        BytesIO(html.encode("iso-8859-1")), result)
-    if not pdf.err:
-        return HttpResponse(
-            result.getvalue(), content_type='application/pdf')
-    return HttpResponse(
-        'we had some errors<pre>%s</pre>' % escape(html))
+# def render_to_pdf(template_src, context_dict):
+#     template = get_template(template_src)
+#     context = dict(context_dict)
+#     html = template.render(context)
+#     result = BytesIO()
+#
+#     pdf = pisa.pisaDocument(
+#         BytesIO(html.encode("iso-8859-1")), result)
+#     if not pdf.err:
+#         return HttpResponse(
+#             result.getvalue(), content_type='application/pdf')
+#     return HttpResponse(
+#         'we had some errors<pre>%s</pre>' % escape(html))
 
 
 def dynamic_article_as_pdf(request, url_title):
@@ -107,19 +109,19 @@ def dynamic_article_as_pdf(request, url_title):
         # If you remove lower() from here,
         # please remove it from website/views.py - def new: also
         url_title = url_title.lower()
-        article_data = Article.objects.get(url_title=url_title)
+        article_data_obj = Article.objects.get(url_title=url_title)
     except Article.DoesNotExist:
         raise Http404("No Such Article found")
 
     # Getting file location
-    file_location = article_data.file_location
+    file_location = article_data_obj.file_location
 
     # Reading File
     file_ = open(os.path.join(settings.BASE_DIR, file_location))
     file_content = file_.read()
 
     article_data = {
-        "this_article_title": article_data.title,
+        "this_article_title": article_data_obj.title,
         "file_content": file_content,
         "project_name": settings.PROJECT_NAME,
     }

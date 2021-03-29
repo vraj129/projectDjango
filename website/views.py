@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import auth, User
 from django.http import Http404
 from django.http import JsonResponse
-from article.models import Article, Group
+from article.models import Article, Group, Report
 from django.contrib import messages
 import re
+# from django import forms
 
 
 def base(request):
@@ -146,8 +147,8 @@ def confirm_publish(request):
     publish_meta_keywords = request.GET.get('publish_meta_keywords')
     # publish_meta_current_page_url = request.GET.get('publish_meta_current_page_url')
     publish_meta_description = request.GET.get('publish_meta_description')
-    publish_meta_image_url = request.GET.get('publish_meta_image_url')
-    publish_facebook_sharing_link = request.GET.get('publish_facebook_sharing_link')
+    # publish_meta_image_url = request.GET.get('publish_meta_image_url')
+    # publish_facebook_sharing_link = request.GET.get('publish_facebook_sharing_link')
 
     if 'file_name' in request.session:
         filename = request.session['file_name']
@@ -225,3 +226,49 @@ def discardArticle(request):
     if 'file_name' in request.session:
         request.session.pop('file_name')
     return new(request)
+
+
+def report_article(request):
+    report_reason_radio = request.GET.get('report_reason_radio')
+    print(report_reason_radio)
+    report_reason_text = request.GET.get('report_reason_text')
+    article_id = request.GET.get('this_article_id')
+    user_id = request.GET.get('this_user_id')
+
+    print(article_id, user_id)
+
+    if not report_reason_text:
+        response_data = {'response': 'Please Enter Reason'}
+    elif not report_reason_radio:
+        response_data = {'response': 'Please Select an option.'}
+
+    elif Report.objects.filter(article_id=article_id, user_id=user_id).count() > 0:
+        response_data = {'response': 'You have already Reported this Article'}
+        print("You have already Reported this post")
+    else:
+        print("You have NOT Reported this post yet")
+        try:
+            article_instance = Article.objects.get(pk=article_id)
+            user_instance = User.objects.get(pk=user_id)
+            print(article_instance)
+            print(user_instance)
+
+            r = Report(article_id=article_instance,
+                       user_id=user_instance,
+                       reason=report_reason_radio,
+                       brief_reason=report_reason_text)
+            r.save()
+
+            response_data = {
+                'response': ('Thank you for for taking time to report '
+                             'If it violates our Community Guidelines, '
+                             'we will definately take action towards it. '
+                             'By reporting this, '
+                             'you prove to an important part of our Community.')}
+            print(report_reason_radio)
+            print(report_reason_text)
+        except Exception as e:
+            print(e)
+            print("-----Some issue--------")
+            response_data = {'response': 'Unknown Error Occured'}
+    return JsonResponse(response_data)

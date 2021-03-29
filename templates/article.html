@@ -49,6 +49,10 @@
 .report_article span{
     display: block;
 }
+.mandatory{
+    display: inline-block !important;
+    color: #dc3545;
+}
     </style>
 {% endblock %}
 
@@ -88,6 +92,10 @@
                         </div>
 
                         <h1 class="mb-3"> {{ this_article.title |title }}</h1>
+                        <!-- <p> -->
+                            {# {{ user.id }} #}
+                            {# {{ this_article.id }} #}
+                        <!-- </p> -->
 
                         <!-- File Content -->
                         <!-- This built in tag named "safe" is harmful. Use only if u trust the content -->
@@ -169,7 +177,7 @@
 
                         <!-- The Report Article Modal Starts -->
                         <div class="modal" id="report_article">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
 
                                     <!-- Modal Header -->
@@ -180,60 +188,87 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body report_article">
-                                        <h4>Reason for reporting the post</h4>
+                                        <h4>Reason for reporting the post<span class="mandatory" style="">*</span></h4>
                                         <span>
-                                            <input type="radio" id="report_fake_info" name="report_reason" value="fake_info">
-                                            <label for="report_fake_info">Fake Information</label>
+                                            <input type="radio" id="FI" name="report_reason" value="FI">
+                                            <label for="FI">Fake Information</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_hate_speech" name="report_reason" value="hate_speech">
-                                            <label for="report_hate_speech">Hate Speech</label>
+                                            <input type="radio" id="HS" name="report_reason" value="HS">
+                                            <label for="HS">Hate Speech</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_harrasment" name="report_reason" value="harrasment">
-                                            <label for="report_harrasment">Harrasment</label>
+                                            <input type="radio" id="HR" name="report_reason" value="HR">
+                                            <label for="HR">Harrasment</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_illegal_sale" name="report_reason" value="illegal_sale">
-                                            <label for="report_illegal_sale">Illegal Sale</label>
+                                            <input type="radio" id="IS" name="report_reason" value="IS">
+                                            <label for="IS">Illegal Sale</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_nudity" name="report_reason" value="nudity">
-                                            <label for="report_nudity">Nudity</label>
+                                            <input type="radio" id="ND" name="report_reason" value="ND">
+                                            <label for="ND">Nudity</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_spam" name="report_reason" value="spam">
-                                            <label for="report_spam">Spam</label>
+                                            <input type="radio" id="SP" name="report_reason" value="SP">
+                                            <label for="SP">Spam</label>
                                         </span>
 
 
                                         <span>
-                                            <input type="radio" id="report_violation_of_laws" name="report_reason" value="violation_of_laws">
-                                            <label for="report_violation_of_laws">Violation of Laws</label>
+                                            <input type="radio" id="VL" name="report_reason" value="VL">
+                                            <label for="VL">Violation of Laws</label>
                                         </span>
 
                                         <span>
-                                            <input type="radio" id="report_others" name="report_reason" value="others">
-                                            <label for="report_others">Others</label>
+                                            <input type="radio" id="OT" name="report_reason" value="OT">
+                                            <label for="OT">Others</label>
                                         </span>
 
-                                        <textarea id="report_reason_text" name="report_reason_text" style="width:100%;" rows="2" required></textarea>
+                                        <label for="report_reason_text">Reason in brief <span class="mandatory">*</span></label>
+                                        <textarea id="report_reason_text" name="report_reason_text" style="width:100%;" rows="2" required maxlength="1023"></textarea>
                                     </div>
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-dismiss="modal">Report</button>
+                                        <button type="button" id="submit_report" class="btn btn-light" data-dismiss="modal">Report</button>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <!-- The Report Article Modal Ends -->
+
+                        <!-- Nested Report Modal (Modal2) Starts -->
+                        <div class="modal" id="nested_report_modal">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="nested_report_modal_heading">Report</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body" id="nested_report_modal_text">
+                                        No Text..
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nested Report Modal (Modal2) Ends -->
 
                         <hr>
                         <div style="margin-bottom: 30px;"></div>
@@ -263,6 +298,8 @@
                             Featured Image <br>
                             Show more posts here. No one is going back<br>
                             Hindi also <br>
+                            Send email during login that someone logged in <br>
+                            Send Last Login Details, extra_user_detail/models.py class:Login_Detail<br>
                         </div>
 
                         <br><br>
@@ -298,26 +335,101 @@
             {% endblock %}
 
             {% block scripts %}
+                <script>
+$(document).ready(function(){
+    $('#submit_report').click(function() {
+        var report_reason_text_has_text = 0;
+        var radio_button_checked = 0;
+        if (!$("input[name='report_reason']:checked").val()) {
+            console.log('Nothing is checked!');
+            $('#nested_report_modal_heading').text('Report Error');
+            $('#nested_report_modal_text').text('Choose atleast one reason');
+            $('#nested_report_modal').modal('show');
+            console.log('Nothing is checked!');
+            return false;
+        }
+        else {
+            radio_button_checked=1;
+        }
+
+        if ($('#report_reason_text').val() && $('#report_reason_text').val() != ''){
+            if($('#report_reason_text').val().trim().length > 0){
+                report_reason_text_has_text = 1;
+            }else{
+            $('#nested_report_modal_heading').text('Report Error');
+            $('#nested_report_modal_text').text('Write the reason for Reporting');
+            $('#nested_report_modal').modal('show');
+            return false;
+            }
+        }
+        else{
+            $('#nested_report_modal_heading').text('Report Error');
+            $('#nested_report_modal_text').text('Write the reason for Reporting');
+            $('#nested_report_modal').modal('show');
+            return false;
+        }
+
+        if(report_reason_text_has_text == 1 && radio_button_checked == 1){
+            var report_reason_radio = $('input[name="report_reason"]:checked').val();
+            console.log(report_reason_radio);
+            var report_reason_text = $('#report_reason_text').val();
+            $('#nested_report_modal_heading').text('Report');
+            $('#nested_report_modal_text').text('Reporting this article. Please Wait...');
+            $('#nested_report_modal').modal('show');
+            $.ajax({
+                url: '{% url 'report_article' %}',
+                data: {
+                    'report_reason_radio': report_reason_radio,
+                    'report_reason_text': report_reason_text,
+                    'this_article_id': {{ this_article.id }},
+                    'this_user_id': {{ user.id }},
+                },
+                dataType: 'json',
+                success: function (response_data) {
+                    document.getElementById('nested_report_modal_text').innerHTML = response_data["response"];
+                }
+            });
+        return false;
+        }
+    });
+});
+
+$("#nested_report_modal").on("hidden.bs.modal", function () {
+    // If radio is check
+    if ($("input[name='report_reason']:checked").val()) {
+        // if textarea is written
+        if ($('#report_reason_text').val() && $('#report_reason_text').val() != ''){
+            if($('#report_reason_text').val().trim().length > 0){
+                // then close all modals
+                $('.modal').modal('hide');
+                $("#report_reason").removeAttr("checked");
+                $('#report_reason_text').val("");
+            }
+        }
+    }
+});
+
+                </script>
 
                 <script>
-                    $(document).ready(function() {
-                                            {% if DEBUG is False %}
-                                                $("#link-to-copy").val("https://www.{{ project_name }}.com/article/" + "{{ request.session.url_title}}");
+$(document).ready(function() {
+{% if DEBUG is False %}
+    $("#link-to-copy").val("https://www.{{ project_name }}.com/article/" + "{{ request.session.url_title}}");
                                         {% else %}
-                                                $("#link-to-copy").val("{{ project_name }}/article/" + "{{ request.session.url_title}}");
+    $("#link-to-copy").val("{{ project_name }}/article/" + "{{ request.session.url_title}}");
                                         {% endif %}
-                                            console.log("HI")
-                                        });
+console.log("HI")
+});
 
 
-                            $("#copy_link_dropdown_item").click(function(){
-                                                    var copyText = document.getElementById("link_to_copy");
-  copyText.select();
-  copyText.setSelectionRange(0, 99999)
-  document.execCommand("copy");
+$("#copy_link_dropdown_item").click(function(){
+var copyText = document.getElementById("link_to_copy");
+copyText.select();
+copyText.setSelectionRange(0, 99999)
+document.execCommand("copy");
 
-                                                                $('.toast').toast('show')
-                                                                console.log("Jai Swaminarayan")
-                                                            });
+$('.toast').toast('show')
+console.log("Jai Swaminarayan")
+});
                 </script>
             {% endblock %}

@@ -28,6 +28,8 @@ class Article(models.Model):
                                  unique=True,
                                  db_index=True)  # Try not to exceed 70
 
+    # total visitors, unique visitors
+    # total_time_spent
     # indexing_count
     # index_increment_in_last_5_days
     # index bahut jaldi change hora h, means voh trending me h
@@ -96,9 +98,9 @@ class Report(models.Model):
     # Similar behavior as PROTECT that matches SQL's RESTRICT more accurately.
     # article_link = models.OneToOneField(Article, on_delete=models.RESTRICT)
     # article_link = models.OneToOneField(Article, on_delete=models.PROTECT)
-    article_link = models.ForeignKey(Article, on_delete=models.PROTECT)
+    article_id = models.ForeignKey(Article, on_delete=models.PROTECT)
 
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
 
     # If ForeignKey duplicate fields are not inserted,
     # delete all migartions and try again
@@ -120,7 +122,40 @@ class Report(models.Model):
     # Date Created
     date_created = models.DateTimeField(auto_now_add=now)
 
+    # unique constraint by combining 2 keys
+    class Meta:
+        unique_together = [['article_id', 'user_id']]
+
+
+MOBILE = 'M'
+TABLET = 'T'
+PC = 'P'
+NONE = 'N'
+
+DEVICE_AGENT = (
+    (MOBILE, 'Mobile'),
+    (TABLET, 'Tablet'),
+    (PC, 'PC'),
+    (NONE, 'None'),
+)
+
+
+class Viewer(models.Model):
+    article_id = models.ForeignKey(Article, on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    ip_address = models.GenericIPAddressField()
+
+    device_agent = models.CharField(max_length=1, choices=DEVICE_AGENT)
+    is_touch_capable = models.BooleanField(default=True)
+    is_bot = models.BooleanField(default=False)
+    browser_details = models.CharField(max_length=255)
+    os_details = models.CharField(max_length=255)
+    device_agent_family = models.CharField(max_length=73)
+
+    date_viewed = models.DateTimeField(auto_now_add=now)
+
+    class Meta:
+        unique_together = [['article_id', 'user_id', 'ip_address']]
 
 # # Make this Model also (shayad jarur padse):
 # trending_articles
-

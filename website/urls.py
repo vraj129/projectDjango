@@ -38,4 +38,5 @@ urlpatterns = [
     path("get_response/$", views.answer_me, name='get_response'),
     path("get_categories/$", views.answer_categories, name='get_categories'),
     path("confirm_publish/$", views.confirm_publish, name='confirm_publish'),
+    path("report_article/$", views.report_article, name='report_article'),
 ]

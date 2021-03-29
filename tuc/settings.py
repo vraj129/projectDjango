@@ -90,6 +90,9 @@ MIDDLEWARE = [
     # Customs
     # To check mobile app users
     'django_user_agents.middleware.UserAgentMiddleware',
+
+    # Location based on IP
+    'django_ip_geolocation.middleware.IpGeolocationMiddleware',
 ]
 
 ROOT_URLCONF = 'tuc.urls'
@@ -108,6 +111,7 @@ TEMPLATES = [
 
                 # Custom Context Processors
                 'website.context_processors.basic_data',
+                'website.context_processors.device_data',
             ],
         },
     },
