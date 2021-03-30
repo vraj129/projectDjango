@@ -1,0 +1,4 @@
+{"_id":{"$oid":"6061faf83c5c1ff57474b5af"},"id":1,"group_id":1,"permission_id":73}
+{"_id":{"$oid":"6061faf83c5c1ff57474b5b0"},"id":2,"group_id":1,"permission_id":74}
+{"_id":{"$oid":"6061faf83c5c1ff57474b5b1"},"id":3,"group_id":1,"permission_id":75}
+{"_id":{"$oid":"6061faf83c5c1ff57474b5b2"},"id":4,"group_id":1,"permission_id":76}

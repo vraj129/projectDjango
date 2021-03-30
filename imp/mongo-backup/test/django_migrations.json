@@ -1,0 +1,17 @@
+{"_id":{"$oid":"5ffc8ffe97fe5dcbd6263eab"},"id":1,"app":"contenttypes","name":"0001_initial","applied":{"$date":"2021-01-11T17:50:54.045Z"}}
+{"_id":{"$oid":"5ffc900197fe5dcbd6263eac"},"id":2,"app":"auth","name":"0001_initial","applied":{"$date":"2021-01-11T17:50:56.95Z"}}
+{"_id":{"$oid":"5ffc900297fe5dcbd6263ead"},"id":3,"app":"admin","name":"0001_initial","applied":{"$date":"2021-01-11T17:50:58.897Z"}}
+{"_id":{"$oid":"5ffc900397fe5dcbd6263eae"},"id":4,"app":"admin","name":"0002_logentry_remove_auto_add","applied":{"$date":"2021-01-11T17:50:59.408Z"}}
+{"_id":{"$oid":"5ffc900397fe5dcbd6263eaf"},"id":5,"app":"admin","name":"0003_logentry_add_action_flag_choices","applied":{"$date":"2021-01-11T17:50:59.669Z"}}
+{"_id":{"$oid":"5ffc900497fe5dcbd6263eb0"},"id":6,"app":"contenttypes","name":"0002_remove_content_type_name","applied":{"$date":"2021-01-11T17:51:00.112Z"}}
+{"_id":{"$oid":"5ffc900497fe5dcbd6263eb1"},"id":7,"app":"auth","name":"0002_alter_permission_name_max_length","applied":{"$date":"2021-01-11T17:51:00.38Z"}}
+{"_id":{"$oid":"5ffc900497fe5dcbd6263eb2"},"id":8,"app":"auth","name":"0003_alter_user_email_max_length","applied":{"$date":"2021-01-11T17:51:00.643Z"}}
+{"_id":{"$oid":"5ffc900597fe5dcbd6263eb3"},"id":9,"app":"auth","name":"0004_alter_user_username_opts","applied":{"$date":"2021-01-11T17:51:00.916Z"}}
+{"_id":{"$oid":"5ffc900597fe5dcbd6263eb4"},"id":10,"app":"auth","name":"0005_alter_user_last_login_null","applied":{"$date":"2021-01-11T17:51:01.196Z"}}
+{"_id":{"$oid":"5ffc900597fe5dcbd6263eb5"},"id":11,"app":"auth","name":"0006_require_contenttypes_0002","applied":{"$date":"2021-01-11T17:51:01.454Z"}}
+{"_id":{"$oid":"5ffc900597fe5dcbd6263eb6"},"id":12,"app":"auth","name":"0007_alter_validators_add_error_messages","applied":{"$date":"2021-01-11T17:51:01.713Z"}}
+{"_id":{"$oid":"5ffc900697fe5dcbd6263eb7"},"id":13,"app":"auth","name":"0008_alter_user_username_max_length","applied":{"$date":"2021-01-11T17:51:01.989Z"}}
+{"_id":{"$oid":"5ffc900697fe5dcbd6263eb8"},"id":14,"app":"auth","name":"0009_alter_user_last_name_max_length","applied":{"$date":"2021-01-11T17:51:02.265Z"}}
+{"_id":{"$oid":"5ffc900697fe5dcbd6263eb9"},"id":15,"app":"auth","name":"0010_alter_group_name_max_length","applied":{"$date":"2021-01-11T17:51:02.537Z"}}
+{"_id":{"$oid":"5ffc900697fe5dcbd6263eba"},"id":16,"app":"auth","name":"0011_update_proxy_permissions","applied":{"$date":"2021-01-11T17:51:02.811Z"}}
+{"_id":{"$oid":"5ffc900797fe5dcbd6263ebb"},"id":17,"app":"sessions","name":"0001_initial","applied":{"$date":"2021-01-11T17:51:03.458Z"}}

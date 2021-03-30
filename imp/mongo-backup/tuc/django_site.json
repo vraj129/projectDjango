@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5ffc8256e86bf2531c3e76c7"},"id":1,"domain":"example.com","name":"example.com"}
+{"_id":{"$oid":"5ffc932a17ad03074d3a6fb9"},"id":2,"domain":"127.0.0.1:8000","name":"127.0.0.1:8000"}

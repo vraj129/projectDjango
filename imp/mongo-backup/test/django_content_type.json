@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5ffc900897fe5dcbd6263ebc"},"id":1,"app_label":"admin","model":"logentry"}
+{"_id":{"$oid":"5ffc900897fe5dcbd6263ec1"},"id":2,"app_label":"auth","model":"permission"}
+{"_id":{"$oid":"5ffc900897fe5dcbd6263ec2"},"id":3,"app_label":"auth","model":"group"}
+{"_id":{"$oid":"5ffc900897fe5dcbd6263ec3"},"id":4,"app_label":"auth","model":"user"}
+{"_id":{"$oid":"5ffc900997fe5dcbd6263ed0"},"id":5,"app_label":"contenttypes","model":"contenttype"}
+{"_id":{"$oid":"5ffc900a97fe5dcbd6263ed5"},"id":6,"app_label":"sessions","model":"session"}

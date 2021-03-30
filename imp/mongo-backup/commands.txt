@@ -1,0 +1,15 @@
+-----------------------------------------------------------------------------------
+mongoexport: --------
+    Each Cluster will have differnet string. Check There
+    Click on 3 dots> Command Line tools:
+    ===================
+    mongoexport --uri mongodb+srv://analytics:<password>@mflix.jzava.mongodb.net/<mydb> --collection <collection_name> --type json --out <collection_name.json>
+
+
+-----------------------------------------------------------------------------------
+mongodump -----------
+    Each Cluster will have differnet string. Check There
+    Click on 3 dots> Command Line tools:
+
+    ==============
+    mongodump --uri mongodb+srv://analytics:analytics-password@mflix.jzava.mongodb.net/mydb

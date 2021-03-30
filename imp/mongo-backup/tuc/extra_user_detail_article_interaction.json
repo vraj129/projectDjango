@@ -1,0 +1,1 @@
+{"_id":{"$oid":"606195db82341b42e3f681b8"},"id":{"$binary":{"base64":"IEF7WjXpQmut883MBR1ouA==","subType":"03"}},"user_id_id":17,"article_id_id":60,"read_status":false,"saved":false,"engagement_time":0,"date_last_read":{"$date":"2021-03-29T14:46:53.093Z"}}

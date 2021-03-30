@@ -1,0 +1,2 @@
+{"_id":{"$oid":"605c4ba99eebcd392bde48d9"},"user_name":"ajinkya","post_liked":["post_id1","postid2"]}
+{"_id":{"$oid":"605c4bb99eebcd392bde48da"},"user_name":"ajinkya","post_liked":["post_id3","postid5"]}
