@@ -52,36 +52,41 @@ def dynamic_article(request, url_title):
 
     # Inserting Viewer Details - Start
     article_instance = Article.objects.get(pk=article_data_obj.id)
-    user_instance = User.objects.get(pk=request.user.id)
+    if request.user.is_authenticated:
+        user_instance = User.objects.get(pk=request.user.id)
 
     # MOBILE = 'M'
-    # TABLET = 'T'
-    # PC = 'P'
-    # NONE = 'N'
-
     if request.user_agent.is_mobile:
         device_agent = 'M'
+
+    # TABLET = 'T'
     elif request.user_agent.is_tablet:
         device_agent = 'T'
+
+    # PC = 'P'
     elif request.user_agent.is_pc:
         device_agent = 'P'
+
+    # NONE = 'N'
     else:
         device_agent = 'N'
 
-    # obj, created = Viewer.objects.get_or_create(
-    obj, created = Viewer.objects.update_or_create(
-        article_id=article_instance,
-        user_id=user_instance,
-        ip_address=get_client_ip(request),
+    if request.user.is_authenticated:
+        # obj, created = Viewer.objects.update_or_create(
+        obj, created = Viewer.objects.get_or_create(
+            article_id=article_instance,
+            user_id=user_instance,
+            ip_address=get_client_ip(request),
 
-        device_agent=device_agent,
-        is_touch_capable=request.user_agent.is_touch_capable,
-        is_bot=request.user_agent.is_bot,
-        browser_details=request.user_agent.browser.family,
-        os_details=request.user_agent.os.family,
-        device_agent_family=request.user_agent.device.family
-    )
-    print("=======--", created)
+            device_agent=device_agent,
+            is_touch_capable=request.user_agent.is_touch_capable,
+            is_bot=request.user_agent.is_bot,
+            browser_details=request.user_agent.browser.family,
+            os_details=request.user_agent.os.family,
+            device_agent_family=request.user_agent.device.family
+        )
+        print("=======--", created)
+        pass
 
     # Inserting Viewer Details - Ends
 

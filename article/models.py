@@ -3,17 +3,7 @@ from django.utils.timezone import now
 import uuid
 from django.contrib.auth.models import User
 from django.template.defaultfilters import truncatechars  # or truncatewords
-
-
-class Group(models.Model):
-    category_name = models.CharField(max_length=63, primary_key=True)
-
-    # So that case insensitive is taken into consideration
-    def clean(self):
-        self.category_name = self.category_name.capitalize()
-
-    def __str__(self):
-        return (str(self.category_name))
+from django.core.validators import MinValueValidator
 
 
 class Article(models.Model):
@@ -53,10 +43,23 @@ class Article(models.Model):
     allow_comments = models.BooleanField(default=True)
 
     # Categories
-    categories = models.CharField(max_length=511, blank=True)
+    # categories = models.CharField(max_length=511, blank=True)
 
     # Count views
     views_count = models.PositiveIntegerField(default=0)
+
+    # weightage of Article(BigIntegerField)
+
+    # https://docs.djangoproject.com/en/3.1/ref/models/fields/#bigintegerfield
+    # A 64-bit integer, much like an IntegerField except that it is guaranteed
+    # to fit numbers from -9223372036854775808 to 9223372036854775807.
+    # The default form widget for this field is a NumberInput
+    weight = models.BigIntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0),
+        ]
+    )
 
     # Date Modified
     date_modified = models.DateTimeField(auto_now=now)
@@ -67,6 +70,18 @@ class Article(models.Model):
     # def __str__(self):
     #     return (str(self.id) + " " +
     #             str(self.url_title) + " (" + str(self.meta_description) + ")")
+
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=63)
+    article_id = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+    # So that case insensitive is taken into consideration
+    def clean(self):
+        self.category_name = self.category_name.capitalize()
+
+    def __str__(self):
+        return (str(self.category_name))
 
 
 FAKE_INFO = 'FI'

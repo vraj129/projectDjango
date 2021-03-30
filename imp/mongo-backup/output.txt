@@ -1,0 +1,189 @@
+(tucVirtualEnv) ajinkya@lenovo:~/Documents/Git/tuc-django/tuc/imp/mongo-backup$ python 1-make-txt.py tuc
+Backing up these Databases...
+['tuc']
+Connecting MongoClient...
+Done
+
+Adding: tuc...
+- dynamicadmin_manytomanyfield
+- extra_user_detail_extra_user_detail
+- django_site
+- dynamicadmin_bundle
+- dynamicadmin_urlfield
+- auth_user_user_permissions
+- __schema__
+- django_content_type
+- account_emailaddress
+- article_viewer
+- django_session
+- article_report
+- admin_sso_assignment
+- auth_permission
+- auth_user_groups
+- django_migrations
+- auth_group
+- auth_group_permissions
+- article_article
+- socialaccount_socialapp_sites
+- dynamicadmin_textfield
+- dynamicadmin_foreignkeyfield
+- django_admin_log
+- socialaccount_socialaccount
+- auth_user
+- extra_user_detail_article_interaction
+- account_emailconfirmation
+- socialaccount_socialapp
+- dynamicadmin_charfield
+- dynamicadmin_field
+- article_group
+- socialaccount_socialtoken
+- dynamicadmin_datetimefield
+"tuc" added to file
+
+Total 33 Collections found in 1 Databases
+Done.
+(tucVirtualEnv) ajinkya@lenovo:~/Documents/Git/tuc-django/tuc/imp/mongo-backup$ ls
+admin  collections.txt  commands.txt  export-all.sh  instagram  local  make-txt.py  test  tuc
+(tucVirtualEnv) ajinkya@lenovo:~/Documents/Git/tuc-django/tuc/imp/mongo-backup$ ./2-export-all.sh 
+
+If possible, run this script in an Empty folder. Do not forget to copy `collection.txt` to that folder
+
+OR
+Make sure this Directory has no important files or folder. It may override filenames based on the name of your collection name
+Press y to continue anyway
+y
+
+-tuc
+Changed Directory
+/home/ajinkya/Documents/Git/tuc-django/tuc/imp/mongo-backup/tuc
+Creating Backup for "dynamicadmin_manytomanyfield" ... 
+2021-03-30T14:39:28.970+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:29.520+0530	exported 0 records
+Done
+Creating Backup for "extra_user_detail_extra_user_detail" ... 
+2021-03-30T14:39:30.697+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:31.173+0530	exported 3 records
+Done
+Creating Backup for "django_site" ... 
+2021-03-30T14:39:32.325+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:32.876+0530	exported 2 records
+Done
+Creating Backup for "dynamicadmin_bundle" ... 
+2021-03-30T14:39:34.078+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:34.767+0530	exported 0 records
+Done
+Creating Backup for "dynamicadmin_urlfield" ... 
+2021-03-30T14:39:35.930+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:36.462+0530	exported 0 records
+Done
+Creating Backup for "auth_user_user_permissions" ... 
+2021-03-30T14:39:37.592+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:38.211+0530	exported 0 records
+Done
+Creating Backup for "__schema__" ... 
+2021-03-30T14:39:39.342+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:39.874+0530	exported 32 records
+Done
+Creating Backup for "django_content_type" ... 
+2021-03-30T14:39:41.053+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:41.675+0530	exported 33 records
+Done
+Creating Backup for "account_emailaddress" ... 
+2021-03-30T14:39:42.872+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:43.595+0530	exported 3 records
+Done
+Creating Backup for "article_viewer" ... 
+2021-03-30T14:39:44.648+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:45.196+0530	exported 2 records
+Done
+Creating Backup for "django_session" ... 
+2021-03-30T14:39:46.297+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:46.883+0530	exported 39 records
+Done
+Creating Backup for "article_report" ... 
+2021-03-30T14:39:48.125+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:48.724+0530	exported 1 record
+Done
+Creating Backup for "admin_sso_assignment" ... 
+2021-03-30T14:39:49.781+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:50.287+0530	exported 0 records
+Done
+Creating Backup for "auth_permission" ... 
+2021-03-30T14:39:51.403+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:52.122+0530	exported 132 records
+Done
+Creating Backup for "auth_user_groups" ... 
+2021-03-30T14:39:53.190+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:53.807+0530	exported 1 record
+Done
+Creating Backup for "django_migrations" ... 
+2021-03-30T14:39:55.027+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:55.666+0530	exported 69 records
+Done
+Creating Backup for "auth_group" ... 
+2021-03-30T14:39:56.890+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:57.513+0530	exported 1 record
+Done
+Creating Backup for "auth_group_permissions" ... 
+2021-03-30T14:39:58.601+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:39:59.158+0530	exported 4 records
+Done
+Creating Backup for "article_article" ... 
+2021-03-30T14:40:02.692+0530	could not connect to server: connection() : dial tcp: i/o timeout
+Done
+Creating Backup for "socialaccount_socialapp_sites" ... 
+2021-03-30T14:40:05.754+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:06.337+0530	exported 1 record
+Done
+Creating Backup for "dynamicadmin_textfield" ... 
+2021-03-30T14:40:07.520+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:08.051+0530	exported 0 records
+Done
+Creating Backup for "dynamicadmin_foreignkeyfield" ... 
+2021-03-30T14:40:09.261+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:09.825+0530	exported 0 records
+Done
+Creating Backup for "django_admin_log" ... 
+2021-03-30T14:40:10.972+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:11.681+0530	exported 139 records
+Done
+Creating Backup for "socialaccount_socialaccount" ... 
+2021-03-30T14:40:12.786+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:13.423+0530	exported 3 records
+Done
+Creating Backup for "auth_user" ... 
+2021-03-30T14:40:14.780+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:15.410+0530	exported 3 records
+Done
+Creating Backup for "extra_user_detail_article_interaction" ... 
+2021-03-30T14:40:16.635+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:17.388+0530	exported 1 record
+Done
+Creating Backup for "account_emailconfirmation" ... 
+2021-03-30T14:40:18.556+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:19.192+0530	exported 0 records
+Done
+Creating Backup for "socialaccount_socialapp" ... 
+2021-03-30T14:40:20.340+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:20.954+0530	exported 1 record
+Done
+Creating Backup for "dynamicadmin_charfield" ... 
+2021-03-30T14:40:22.022+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:22.548+0530	exported 0 records
+Done
+Creating Backup for "dynamicadmin_field" ... 
+2021-03-30T14:40:23.771+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:24.496+0530	exported 0 records
+Done
+Creating Backup for "article_group" ... 
+2021-03-30T14:40:25.675+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:26.254+0530	exported 5 records
+Done
+Creating Backup for "socialaccount_socialtoken" ... 
+2021-03-30T14:40:27.417+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:28.039+0530	exported 3 records
+Done
+Creating Backup for "dynamicadmin_datetimefield" ... 
+2021-03-30T14:40:29.287+0530	connected to: mongodb+srv://[**REDACTED**]@theunitedcodes.eump1.mongodb.net/tuc
+2021-03-30T14:40:29.839+0530	exported 0 records
+Done

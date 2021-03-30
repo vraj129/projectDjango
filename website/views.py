@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth, User
 from django.http import Http404
 from django.http import JsonResponse
-from article.models import Article, Group, Report
+from article.models import Article, Category, Report
 from django.contrib import messages
 import re
 # from django import forms
@@ -132,7 +132,7 @@ def answer_categories(request):
         response_data = {'response': '  '}
     else:
         # i is for insensitive case search
-        queryset = Group.objects.filter(category_name__istartswith=search_string)
+        queryset = Category.objects.filter(category_name__istartswith=search_string)
         values_list = list(queryset.values())
         print("vv", values_list)
         response_data = {'response': values_list}

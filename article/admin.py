@@ -1,12 +1,24 @@
 from django.contrib import admin
-from .models import Article, Group, Report, Viewer
+from django.db import models
+from .models import Article, Category, Report, Viewer
 from django.contrib import messages
 from django.utils.translation import ngettext
+from django.forms import Textarea
+
+
+# https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.StackedInline
+class CategoryInline(admin.TabularInline):
+    model = Category
 
 
 class ArticleAdmin(admin.ModelAdmin):
+    inlines = [
+        CategoryInline,
+    ]
+
     list_display = ('id', 'url_title',
                     'publish_status', 'allow_comments', 'views_count',
+                    'weight',
                     'date_modified', 'date_created')
 
     ordering = ['-date_modified']
@@ -19,6 +31,10 @@ class ArticleAdmin(admin.ModelAdmin):
         # Below line should be removed from comment
         # 'delete_selected',
     ]
+
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 3, 'cols': 40})},
+    }
 
     def publish_selected_articles(self, request, queryset):
         updated = queryset.update(publish_status=True)
@@ -128,8 +144,17 @@ class ReportAdmin(admin.ModelAdmin):
     mark_as_unsolved.short_description = "Mark as NOT Solved"
 
 
+# to sort top groups, get highest weightage `Article`
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id',
+                    'category_name', 'article_id',
+                    )
+
+
 class ViewerAdmin(admin.ModelAdmin):
     list_display = ('id',
+                    'article_id', 'user_id',
+                    'ip_address',
                     'device_agent',
                     'is_touch_capable', 'is_bot',
                     'browser_details', 'os_details', 'device_agent_family',
@@ -141,4 +166,5 @@ class ViewerAdmin(admin.ModelAdmin):
 admin.site.register(Viewer, ViewerAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Report, ReportAdmin)
-admin.site.register(Group)
+# admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
