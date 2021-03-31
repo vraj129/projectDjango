@@ -27,4 +27,3 @@ class MyAdminSite(admin.AdminSite):
         if not getattr(view, 'csrf_exempt', False):
             inner = csrf_protect(inner)
         return update_wrapper(inner, view)
-

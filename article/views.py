@@ -81,8 +81,13 @@ def dynamic_article(request, url_title):
             device_agent=device_agent,
             is_touch_capable=request.user_agent.is_touch_capable,
             is_bot=request.user_agent.is_bot,
-            browser_details=request.user_agent.browser.family,
-            os_details=request.user_agent.os.family,
+
+            browser_family=request.user_agent.browser.family,
+            browser_version=request.user_agent.browser.version_string,
+
+            os_family=request.user_agent.os.family,
+            os_version=request.user_agent.os.version_string,
+
             device_agent_family=request.user_agent.device.family
         )
         print("=======--", created)

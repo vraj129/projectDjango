@@ -4,6 +4,7 @@ import uuid
 from django.contrib.auth.models import User
 from django.template.defaultfilters import truncatechars  # or truncatewords
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class Article(models.Model):
@@ -42,8 +43,8 @@ class Article(models.Model):
     # Publish Status
     allow_comments = models.BooleanField(default=True)
 
-    # Categories
-    # categories = models.CharField(max_length=511, blank=True)
+    # Category
+    category = models.CharField(max_length=511, blank=True)
 
     # Count views
     views_count = models.PositiveIntegerField(default=0)
@@ -72,16 +73,18 @@ class Article(models.Model):
     #             str(self.url_title) + " (" + str(self.meta_description) + ")")
 
 
-class Category(models.Model):
-    category_name = models.CharField(max_length=63)
+class Hashtag(models.Model):
+    hashtag_name = models.CharField(max_length=150)
     article_id = models.ForeignKey(Article, on_delete=models.CASCADE)
 
     # So that case insensitive is taken into consideration
     def clean(self):
-        self.category_name = self.category_name.capitalize()
+        if Hashtag.objects.filter(article_id=self.article_id).count()>=30:
+            raise ValidationError('Only 30 hashtags allowed per article')
+        # self.hashtag_name = self.hashtag_name.lower()
 
     def __str__(self):
-        return (str(self.category_name))
+        return (str(self.hashtag_name))
 
 
 FAKE_INFO = 'FI'
@@ -163,8 +166,13 @@ class Viewer(models.Model):
     device_agent = models.CharField(max_length=1, choices=DEVICE_AGENT)
     is_touch_capable = models.BooleanField(default=True)
     is_bot = models.BooleanField(default=False)
-    browser_details = models.CharField(max_length=255)
-    os_details = models.CharField(max_length=255)
+
+    browser_family = models.CharField(max_length=63)
+    browser_version = models.CharField(max_length=42, blank=True)
+
+    os_family = models.CharField(max_length=63)
+    os_version = models.CharField(max_length=42, blank=True)
+
     device_agent_family = models.CharField(max_length=73)
 
     date_viewed = models.DateTimeField(auto_now_add=now)

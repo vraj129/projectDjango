@@ -1,19 +1,19 @@
 from django.contrib import admin
 from django.db import models
-from .models import Article, Category, Report, Viewer
+from .models import Article, Report, Viewer, Hashtag
 from django.contrib import messages
 from django.utils.translation import ngettext
 from django.forms import Textarea
 
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.StackedInline
-class CategoryInline(admin.TabularInline):
-    model = Category
+class HashtagInline(admin.TabularInline):
+    model = Hashtag
 
 
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [
-        CategoryInline,
+        HashtagInline,
     ]
 
     list_display = ('id', 'url_title',
@@ -21,7 +21,7 @@ class ArticleAdmin(admin.ModelAdmin):
                     'weight',
                     'date_modified', 'date_created')
 
-    ordering = ['-date_modified']
+    ordering = ['-date_created']
 
     actions = [
         'publish_selected_articles', 'archieve_selected_articles',
@@ -145,19 +145,19 @@ class ReportAdmin(admin.ModelAdmin):
 
 
 # to sort top groups, get highest weightage `Article`
-class CategoryAdmin(admin.ModelAdmin):
+class HashtagAdmin(admin.ModelAdmin):
     list_display = ('id',
-                    'category_name', 'article_id',
+                    'hashtag_name', 'article_id',
                     )
 
 
 class ViewerAdmin(admin.ModelAdmin):
     list_display = ('id',
-                    'article_id', 'user_id',
-                    'ip_address',
-                    'device_agent',
-                    'is_touch_capable', 'is_bot',
-                    'browser_details', 'os_details', 'device_agent_family',
+                    'article_id', 'user_id', 'ip_address',
+                    'device_agent', 'is_touch_capable', 'is_bot',
+                    'browser_family', 'browser_version',
+                    'os_family', 'os_version',
+                    'device_agent_family',
                     'date_viewed'
                     )
 
@@ -167,4 +167,4 @@ admin.site.register(Viewer, ViewerAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Report, ReportAdmin)
 # admin.site.register(Category)
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(Hashtag, HashtagAdmin)
