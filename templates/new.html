@@ -287,7 +287,7 @@ var publish_facebook_sharing_link = $('#publish_facebook_sharing_link').val();
 
 document.getElementById('saving-status').innerHTML = "Saving...";
 $.ajax({
-url: '{% url 'get_response' %}',
+url: '{% url 'save_article' %}',
 data: {
 'codeContent': codeContent,
 'publish_title': publish_title,

@@ -17,7 +17,7 @@ class Article(models.Model):
     title = models.CharField(max_length=80)  # Try not to exceed 70
 
     # url
-    url_title = models.CharField(max_length=80,
+    url_title = models.SlugField(max_length=80,
                                  unique=True,
                                  db_index=True)  # Try not to exceed 70
 
