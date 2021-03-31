@@ -1,0 +1,13 @@
+| > python manage.py dumpdata > imp/db-backups/<backupfile.json>
+
+** change database_details in settings.py **
+
+------------------------------------------------------------
+| 
+| > python manage.py migrate --run-syncdb
+| 
+| > python manage.py loaddata  imp/db-backups/<backup4>.json
+|
+------------------------------------------------------------
+
+if any record causes error, delete the record and try again

@@ -39,8 +39,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tuc.apps.MyAdminConfig',
-    # 'django.contrib.admin',
+    # to keep custom admin login, so that no one can login but staff users
+    # Also uncomment the code in `tuc/apps.py` and `tuc/admin.py`
+    # 'tuc.apps.MyAdminConfig',
+
+    # to make anyone login
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -122,17 +126,33 @@ WSGI_APPLICATION = 'tuc.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         "CLIENT": {
+#             "name": "tuc",
+#             "host": "mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority",
+#             "username": "ajinzrathod",
+#             "password": "ajinz812",
+#             "authMechanism": "SCRAM-SHA-1",
+#         },
+#     }
+# }
 
+# modules required for postgresql
+# psycopg2
+
+# create on user `ajinzrathod`, not on user `postgres`
+# else you wont have rights to view the data
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        "CLIENT": {
-            "name": "tuc",
-            "host": "mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority",
-            "username": "ajinzrathod",
-            "password": "ajinz812",
-            "authMechanism": "SCRAM-SHA-1",
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'djaley',
+        'USER': 'ajinzrathod',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        # 'POST': '5432',
     }
 }
 
@@ -207,7 +227,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-CLIENT = MongoClient("mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority")
+# CLIENT = MongoClient("mongodb+srv://ajinzrathod:ajinz812@theunitedcodes.eump1.mongodb.net/tuc?retryWrites=true&w=majority")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -220,3 +240,9 @@ DATABASE_NAME = 'tuc'
 
 # Template tags and filters - a | title
 # TIME_ZONE = 'Iceland'
+
+# for emergency purpose,
+# superuser created from command line and google login
+# username: aj
+# email: aj@djaley.com
+# password: aj

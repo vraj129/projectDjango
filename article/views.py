@@ -77,18 +77,20 @@ def dynamic_article(request, url_title):
             article_id=article_instance,
             user_id=user_instance,
             ip_address=get_client_ip(request),
+            defaults={
 
-            device_agent=device_agent,
-            is_touch_capable=request.user_agent.is_touch_capable,
-            is_bot=request.user_agent.is_bot,
+                'device_agent': device_agent,
+                'is_touch_capable': request.user_agent.is_touch_capable,
+                'is_bot': request.user_agent.is_bot,
 
-            browser_family=request.user_agent.browser.family,
-            browser_version=request.user_agent.browser.version_string,
+                'browser_family': request.user_agent.browser.family,
+                'browser_version': request.user_agent.browser.version_string,
 
-            os_family=request.user_agent.os.family,
-            os_version=request.user_agent.os.version_string,
+                'os_family': request.user_agent.os.family,
+                'os_version': request.user_agent.os.version_string,
 
-            device_agent_family=request.user_agent.device.family
+                'device_agent_family': request.user_agent.device.family
+            },
         )
         print("=======--", created)
         pass

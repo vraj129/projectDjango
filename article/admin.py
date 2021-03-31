@@ -4,6 +4,7 @@ from .models import Article, Report, Viewer, Hashtag
 from django.contrib import messages
 from django.utils.translation import ngettext
 from django.forms import Textarea
+from .utils import delete_realted_data
 
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.StackedInline
@@ -26,6 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
     actions = [
         'publish_selected_articles', 'archieve_selected_articles',
         'allow_comments', 'disable_comments',
+        'custom_delete',
 
         # If we write | admin.site.disable_action('delete_selected') | anywhere
         # Below line should be removed from comment
@@ -35,6 +37,26 @@ class ArticleAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 3, 'cols': 40})},
     }
+
+    def get_actions(self, request):
+        actions = super(ArticleAdmin, self).get_actions(request)
+        del actions['delete_selected']
+        return actions
+
+    # Single delete which is done from object view in Admin Panel
+    # is defined `Article/models.py`
+    def custom_delete(self, request, queryset):
+        for obj in queryset:
+            delete_realted_data(obj)
+            obj.delete()
+
+        if queryset.count() == 1:
+            message_bit = "1 Article entry was"
+        else:
+            message_bit = "%s Articles were" % queryset.count()
+        self.message_user(request, "%s successfully deleted." % message_bit)
+
+    custom_delete.short_description = "Delete selected Articles"
 
     def publish_selected_articles(self, request, queryset):
         updated = queryset.update(publish_status=True)

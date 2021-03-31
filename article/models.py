@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import truncatechars  # or truncatewords
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from .utils import delete_realted_data
 
 
 class Article(models.Model):
     # File location
-    file_location = models.CharField(max_length=255)
+    file_location = models.CharField(
+        max_length=255, default='templates/articles/')
 
     # Main title
     title = models.CharField(max_length=80)  # Try not to exceed 70
@@ -67,6 +69,15 @@ class Article(models.Model):
 
     # Date Created
     date_created = models.DateTimeField(auto_now_add=now)
+
+    def save(self, *args, **kwargs):
+        print("Article saved, Jai Swaminarayan")
+        super(Article, self).save(*args, **kwargs)
+
+    # Bulk delete is defined `Article/admin.py`
+    def delete(self, *args, **kwargs):
+        delete_realted_data(self)
+        super(Article, self).delete(*args, **kwargs)
 
     # def __str__(self):
     #     return (str(self.id) + " " +

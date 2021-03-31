@@ -10,7 +10,7 @@ from allauth.socialaccount.models import SocialAccount
 from django_ip_geolocation.decorators import with_ip_geolocation
 
 
-my_database = settings.CLIENT[settings.DATABASE_NAME]
+# my_database = settings.CLIENT[settings.DATABASE_NAME]
 
 # Create your views here.
 
