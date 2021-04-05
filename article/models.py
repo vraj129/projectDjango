@@ -9,6 +9,9 @@ from .utils import delete_realted_data
 
 
 class Article(models.Model):
+    # Shows which user has written the article
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
     # File location
     file_location = models.CharField(
         max_length=255, default='templates/articles/')

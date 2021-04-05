@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils.translation import ngettext
 from django.forms import Textarea
 from .utils import delete_realted_data
+from django.db.models import F, Count, Window, Min, Q
 
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.StackedInline
@@ -17,7 +18,8 @@ class ArticleAdmin(admin.ModelAdmin):
         HashtagInline,
     ]
 
-    list_display = ('id', 'url_title',
+    list_display = ('id', 'user_id',
+                    'url_title',
                     'publish_status', 'allow_comments', 'views_count',
                     'weight',
                     'date_modified', 'date_created')
@@ -112,14 +114,54 @@ class ReportAdmin(admin.ModelAdmin):
     list_display = ('id',
                     'article_id',  # fk
                     'user_id',  # fk
-                    'reason', 'short_reason',
+                    'reason',
+                    # 'short_reason',
                     'solved_status',
                     'date_created',
                     )
 
-    # ordering = ['solved_status', 'date_created']
-    # highetst count of artcile link
-    # count of reason
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            count_by_article=Window(
+                expression=Count('article_id', filter=Q(solved_status=False)),
+                partition_by=F('article_id')
+            ),
+            count_by_article_and_reason=Window(
+                expression=Count('article_id', filter=Q(solved_status=False)),
+                partition_by=[F('article_id'), F('reason')],
+            ),
+            earliest_report_by_article=Window(
+                expression=Min('date_created', filter=Q(solved_status=False)),
+                partition_by=[F('article_id')],
+            ),
+            earliest_report_by_article_and_reason=Window(
+                expression=Min('date_created', filter=Q(solved_status=False)),
+                partition_by=[F('article_id'), F('reason')],
+            ),
+        ).order_by('solved_status', '-count_by_article',
+                   'earliest_report_by_article', 'article_id',
+                   '-count_by_article_and_reason', 'earliest_report_by_article_and_reason',
+                   'reason', 'date_created')
+        # return super().get_queryset(request).annotate(
+        #     count_by_article=Window(
+        #         expression=Count('*'),
+        #         partition_by=F('article_id')
+        #     ),
+        #     count_by_article_and_reason=Window(
+        #         expression=Count('*'),
+        #         partition_by=[F('article_id'), F('reason')],
+        #     ),
+        #     earliest_report_by_article=Window(
+        #         expression=Min('date_created'),
+        #         partition_by=[F('article_id')],
+        #     ),
+        #     earliest_report_by_article_and_reason=Window(
+        #         expression=Min('date_created'),
+        #         partition_by=[F('article_id'), F('reason')],
+        #     ),
+        # ).order_by('solved_status', '-count_by_article', 'earliest_report_by_article', 'article_id',
+        #            '-count_by_article_and_reason', 'earliest_report_by_article_and_reason',
+        #            'reason', 'date_created')
 
     actions = [
         'mark_as_solved',
@@ -144,24 +186,6 @@ class ReportAdmin(admin.ModelAdmin):
             '%d articles were marked as NOT Solved.',
             updated,
         ) % updated, messages.SUCCESS)
-
-    # def get_queryset(self, request):
-    #     qs = super(ReportAdmin, self).get_queryset(request)
-    #     # return qs.filter(user__username__icontains="jo")
-    #     return qs.annotate(num_user=Count('user'))
-    #     # return qs.annotate(Count('article_link'))
-    #     # if request.user.is_superuser:
-    #     #     return qs
-
-    # def queryset(self, request):
-    # def get_queryset(self, request):
-    #     qs = super(ReportAdmin, self).get_queryset(request)
-    #     # return qs.filter(user__username__icontains="jo")
-    #     return qs.annotate(user_count=Count('user'))
-
-    # def show_user_count(self, inst):
-    #     return inst.user_count
-    # show_user_count.admin_order_field = 'user_count'
 
     mark_as_unsolved.short_description = "Mark as NOT Solved"
 
