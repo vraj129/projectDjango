@@ -115,7 +115,7 @@ class ReportAdmin(admin.ModelAdmin):
                     'article_id',  # fk
                     'user_id',  # fk
                     'reason',
-                    # 'short_reason',
+                    'short_reason',
                     'solved_status',
                     'date_created',
                     )
@@ -123,11 +123,11 @@ class ReportAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(
             count_by_article=Window(
-                expression=Count('article_id', filter=Q(solved_status=False)),
+                expression=Count('id', filter=Q(solved_status=False)),
                 partition_by=F('article_id')
             ),
             count_by_article_and_reason=Window(
-                expression=Count('article_id', filter=Q(solved_status=False)),
+                expression=Count('id', filter=Q(solved_status=False)),
                 partition_by=[F('article_id'), F('reason')],
             ),
             earliest_report_by_article=Window(
@@ -138,31 +138,15 @@ class ReportAdmin(admin.ModelAdmin):
                 expression=Min('date_created', filter=Q(solved_status=False)),
                 partition_by=[F('article_id'), F('reason')],
             ),
-        ).order_by('solved_status', '-count_by_article',
-                   'earliest_report_by_article', 'article_id',
-                   '-count_by_article_and_reason', 'earliest_report_by_article_and_reason',
+        ).order_by('solved_status',
+                   '-count_by_article',
+                   'earliest_report_by_article',
+                   'article_id',
+                   '-count_by_article_and_reason',
+                   'earliest_report_by_article_and_reason',
                    'reason', 'date_created')
-        # return super().get_queryset(request).annotate(
-        #     count_by_article=Window(
-        #         expression=Count('*'),
-        #         partition_by=F('article_id')
-        #     ),
-        #     count_by_article_and_reason=Window(
-        #         expression=Count('*'),
-        #         partition_by=[F('article_id'), F('reason')],
-        #     ),
-        #     earliest_report_by_article=Window(
-        #         expression=Min('date_created'),
-        #         partition_by=[F('article_id')],
-        #     ),
-        #     earliest_report_by_article_and_reason=Window(
-        #         expression=Min('date_created'),
-        #         partition_by=[F('article_id'), F('reason')],
-        #     ),
-        # ).order_by('solved_status', '-count_by_article', 'earliest_report_by_article', 'article_id',
-        #            '-count_by_article_and_reason', 'earliest_report_by_article_and_reason',
-        #            'reason', 'date_created')
 
+    print
     actions = [
         'mark_as_solved',
         'mark_as_unsolved',
